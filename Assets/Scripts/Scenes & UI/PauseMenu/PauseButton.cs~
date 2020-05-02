@@ -1,0 +1,30 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+/// <summary>
+/// Handles the button transitions for the pause menu buttons.
+/// </summary>
+
+public class PauseButton : MonoBehaviour
+{
+    Image button;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        button = GetComponent<Image>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    private void OnMouseEnter()
+    {
+        button.enabled = true;
+    }
+}

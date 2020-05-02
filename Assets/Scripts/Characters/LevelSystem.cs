@@ -65,6 +65,6 @@ public class LevelSystem : MonoBehaviour
 
     public float GetExperienceNormalised()
     {
-        return experience / experienceToNextLvl;
+        return (float)experience / experienceToNextLvl;
     }
 }

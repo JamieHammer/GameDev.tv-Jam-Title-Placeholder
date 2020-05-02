@@ -24,16 +24,7 @@ public class MainMenuCtrl : MonoBehaviour
     #endregion
 
     public GameObject main;                     // the main menu
-    public GameObject options;                  // the options menu
-
-    void Start()
-    {
-        //dataCtrl = DataCtrl.instance;
-
-        //SwitchCanvas(MenuType.MainMenu);
-
-        //ButtonLayout();
-    }
+    public GameObject settings;                 // the settings menu
 
     /// <summary>
     /// Handles callbacks on the continue game button.
@@ -59,7 +50,7 @@ public class MainMenuCtrl : MonoBehaviour
 
     public void Options()
     {
-        options.SetActive(true);
+        settings.SetActive(true);
         main.SetActive(false);
     }
 
@@ -70,7 +61,7 @@ public class MainMenuCtrl : MonoBehaviour
     public void Back()
     {
         main.SetActive(true);
-        options.SetActive(false);
+        settings.SetActive(false);
     }
 
     /// <summary>
@@ -79,6 +70,7 @@ public class MainMenuCtrl : MonoBehaviour
 
     public void Quit()
     {
+        Debug.Log("Quitting Game...");
         Application.Quit();
     }
 }

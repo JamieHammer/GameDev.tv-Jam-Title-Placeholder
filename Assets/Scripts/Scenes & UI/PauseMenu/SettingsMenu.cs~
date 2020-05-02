@@ -1,0 +1,21 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class SettingsMenu : MonoBehaviour
+{
+    #region Singleton
+    public static SettingsMenu instance;
+
+    void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(this);
+    }
+
+    #endregion
+
+
+}
