@@ -16,6 +16,12 @@ This branch is the work in progress branch, each commit corresponds to a workday
 ### About The Game
 This will be populated once the story has begun coming together. More to follow in the weeks to come...
 
+### Asset Credits
+TextMeshPro by Unity Technologies
+Cinemachine by Unity Technologies
+UI Pack: RPG Expansion by Kenney
+Free Platform Game Assets by Bayat Games
+
 ### Want To Join The Team?
 As of right now, we are a small indie team of little old me, backed by a small team of consultants. If you are interested in this project and think you can add value to it in any way, please reach out to us at skyhighstudios@gmail.com
 
