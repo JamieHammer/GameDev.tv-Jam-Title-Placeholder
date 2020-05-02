@@ -1,0 +1,35 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+/// <summary>
+/// Handles the choices initialisation and logic.
+/// </summary>
+
+public class ChoiceCtrl : MonoBehaviour
+{
+    State choice;               // the state of this choice
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+
+    public void SetupChoice(State state)
+    {
+        choice = state;
+
+        Debug.Log("choice: " + choice);
+    }
+}

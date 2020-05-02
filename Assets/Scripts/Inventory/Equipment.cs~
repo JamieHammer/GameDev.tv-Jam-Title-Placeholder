@@ -1,0 +1,13 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+/// <summary>
+/// Base class of all equipment items.
+/// </summary>
+
+    [CreateAssetMenu(fileName = "New Equipment", menuName = "Inventory/Equipment ")]
+public class Equipment : Item
+{
+    
+}

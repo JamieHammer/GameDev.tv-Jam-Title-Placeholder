@@ -1,0 +1,31 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class AbilityUI : MonoBehaviour
+{
+    public Transform abilitiesParent;           // the parent transform of the abilities
+
+    public AbilityCtrl[] currentAbilities;      // an array of ability controllers
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        currentAbilities = abilitiesParent.GetComponentsInChildren<AbilityCtrl>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+
+    void UpdateUI()
+    {
+
+    }
+}

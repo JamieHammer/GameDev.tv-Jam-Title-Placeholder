@@ -1,0 +1,28 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using TMPro;
+
+/// <summary>
+/// Handles the story related titbits.
+/// </summary>
+
+public class StoryManager : MonoBehaviour
+{
+    [SerializeField] TextMeshProUGUI storyComponent;        // reference to the story text component
+    [SerializeField] State startingState;                   // reference to the starting story state
+
+    State currentState;                                     // reference to the current state of the story
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+}

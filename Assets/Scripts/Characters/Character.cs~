@@ -1,0 +1,28 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+/// <summary>
+/// To create Characters from the inspector.
+/// </summary>
+
+[CreateAssetMenu(menuName = "Character")]
+public class Character : ScriptableObject
+{
+    [Header("Name")]
+
+    [SerializeField] string playerName;                     // the name of this character
+
+    [Header("Gender")]
+
+    [SerializeField] Gender gender;                         // the gender of this character
+
+    [Header("Abilities")]
+
+    [Range(0, 10)] [SerializeField] int strength;           // the physical and mental strength
+    [Range(0, 10)] [SerializeField] int stamina;            // the health of the character
+    [Range(0, 10)] [SerializeField] int intelligence;       // the intelligence of the character
+    [Range(0, 10)] [SerializeField] int dexterity;          // the skill of the character
+    [Range(0, 10)] [SerializeField] int charisma;           // the charm of the character
+    [Range(0, 10)] [SerializeField] int luck;               // the luck of the character
+}

@@ -1,0 +1,24 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+/// <summary>
+/// Base class of all usable items.
+/// </summary>
+
+[CreateAssetMenu(fileName = "New Usable Item", menuName = "Inventory/Usable Item ")]
+public class UsableItem : Item
+{
+    /// <summary>
+    /// Overrides the Item use function, to equip item.
+    /// </summary>
+
+    public override void Use()
+    {
+        base.Use();
+
+        // use item
+
+        // remove from inventory
+    }
+}

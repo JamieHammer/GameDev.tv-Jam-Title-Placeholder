@@ -1,0 +1,52 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PickTarget : MonoBehaviour
+{
+    BattleSystem battleSystem;
+
+    PlayerStats[] enemyTargets;
+
+    List<PlayerStats> enemies;
+
+    public GameObject[] buttons;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        battleSystem = BattleSystem.instance;
+        SetupTargets();
+
+        ShowTargets();
+    }
+
+    void SetupTargets()
+    {
+        if (enemies == null)
+        {
+            enemies = battleSystem.enemies;
+        }
+    }
+
+    public void ChooseTarget(int index)
+    {
+        Debug.Log("Target " + index + " is chosen");
+
+        //StartCoroutine(battleSystem.PlayerAttack(enemyTargets[index]));
+    }
+
+    public void ShowTargets()
+    {
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            if (battleSystem.stillAlive[i])
+            {
+                // show button
+                Debug.Log(i + " should be shown.");
+
+                // add player stats to enemyTargets
+            }
+        }
+    }
+}

@@ -1,0 +1,19 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+[CreateAssetMenu]
+public class Item : ScriptableObject
+{
+    [Header("Inventory Type")]
+
+    [SerializeField] InventoryType inventoryType;       // the type of this inventory item
+
+    [Header("Name")]
+
+    [SerializeField] string itemName;                   // the name of this inventory item
+
+    [Header("Icon")]
+
+    [SerializeField] Sprite itemIcon;                   // the icon of this inventory item
+}

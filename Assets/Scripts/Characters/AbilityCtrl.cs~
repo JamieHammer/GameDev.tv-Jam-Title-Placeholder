@@ -1,0 +1,29 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using TMPro;
+
+/// <summary>
+/// 
+/// </summary>
+
+public class AbilityCtrl : MonoBehaviour
+{
+    public Stat stat;
+
+    [SerializeField] TextMeshProUGUI titleTxt;           // the text component of the ability title
+    [SerializeField] TextMeshProUGUI valueTxt;           // the text component of the base value
+    [SerializeField] TextMeshProUGUI modifierTxt;        // the text component of potential modifiers
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+}

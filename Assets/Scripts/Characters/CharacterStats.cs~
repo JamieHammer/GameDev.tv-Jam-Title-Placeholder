@@ -1,0 +1,13 @@
+﻿using UnityEngine;
+
+public class CharacterStats : MonoBehaviour
+{
+    public Stat strength;
+    public Stat stamina;
+    public Stat intelligence;
+    public Stat dexterity;
+    public Stat charisma;
+    public Stat luck;
+    public Stat attack;
+    public Stat defence;
+}

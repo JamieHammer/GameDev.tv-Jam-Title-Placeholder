@@ -1,0 +1,33 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class EquipmentManager : MonoBehaviour
+{
+    #region Singleton
+
+    public static EquipmentManager instance;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    #endregion
+
+    Equipment[] currentEquipment;           // an array of currently equipped equipment
+
+    int equipmentSlots = 4;                 // the currently supported number of equipped items
+
+    private void Start()
+    {
+        currentEquipment = new Equipment[equipmentSlots];
+    }
+}

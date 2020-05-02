@@ -1,0 +1,58 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+
+/// <summary>
+/// Responsible for UI related to the player's level.
+/// </summary>
+
+public class PlayerWindow : MonoBehaviour
+{
+    TextMeshProUGUI nameText;               // reference to the name text component
+    TextMeshProUGUI levelText;              // reference to the level text component
+    TextMeshProUGUI healthText;             // reference to the health text component
+    Slider healthSlider;                    // reference to the health slider component
+    Slider experienceSlider;                // reference to the experience slider component
+
+    LevelSystem levelSystem;                // reference to the level system
+
+    private void Awake()
+    {
+        nameText = transform.Find("nameText").GetComponent<TextMeshProUGUI>();
+
+        healthSlider = transform.Find("healthSlider").GetComponent<Slider>();
+        healthText = transform.Find("levelText").GetComponent<TextMeshProUGUI>();
+
+        experienceSlider = transform.Find("experienceSlider").GetComponent<Slider>();
+        levelText = transform.Find("levelText").GetComponent<TextMeshProUGUI>();
+
+        SetExperienceBarSize(.5f);
+        SetLevelNumber(7);
+    }
+
+    #region Experience
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="experienceNormalised"></param>
+
+    void SetExperienceBarSize(float experienceNormalised)
+    {
+        experienceSlider.value = experienceNormalised;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="levelNumber"></param>
+
+    void SetLevelNumber(int levelNumber)
+    {
+        levelText.text = "Level " + levelNumber + 1;
+    }
+
+    #endregion
+}

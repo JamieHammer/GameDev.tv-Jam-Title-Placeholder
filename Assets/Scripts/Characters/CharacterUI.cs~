@@ -1,0 +1,29 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+/// <summary>
+/// 
+/// </summary>
+
+public class CharacterUI : MonoBehaviour
+{
+    [SerializeField] PlayerStats currentStats;          // the character stats to show on the screen
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    void UpdateUI()
+    {
+
+    }
+}

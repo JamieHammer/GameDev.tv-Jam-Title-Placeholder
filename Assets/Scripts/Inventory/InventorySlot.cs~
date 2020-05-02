@@ -1,0 +1,18 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class InventorySlot : MonoBehaviour
+{
+    Item item;
+
+    /// <summary>
+    /// Responsible for adding an item to this inventory slot.
+    /// </summary>
+    /// <param name="newItem">the new item to add</param>
+
+    public void AddItem(Item newItem)
+    {
+        item = newItem;
+    }
+}

@@ -1,0 +1,42 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+/// <summary>
+/// Responsible for the level system.
+/// </summary>
+
+public class LevelSystem : MonoBehaviour
+{
+    public int level;                   // the current level of this character
+    public int experience;              // the amount of experience gained already
+    public int experienceToNextLvl;     // the amount of experience needed to reach next level
+
+    /// <summary>
+    /// Constructs a level system from the class.
+    /// </summary>
+
+    public LevelSystem ()
+    {
+        level = 0;
+        experience = 0;
+        experienceToNextLvl = 100;
+    }
+
+    /// <summary>
+    /// Responsible for adding the experience and act accordingly.
+    /// </summary>
+    /// <param name="amount">Amount of experience to add</param>
+
+    public void AddExperience(int amount)
+    {
+        experience += amount;
+        if (experience >= experienceToNextLvl)
+        {
+            // enough experience to level up
+
+            level++;
+            experience -= experienceToNextLvl;
+        }
+    }
+}

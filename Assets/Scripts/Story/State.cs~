@@ -1,0 +1,21 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+[CreateAssetMenu(menuName = "State")]
+public class State : ScriptableObject
+{
+    [Header("Story")]
+
+    [TextArea(10,14)] [SerializeField] string storyTxt;               // the story text to show in the game UI
+
+    /// <summary>
+    /// Returns the current story line.
+    /// </summary>
+    /// <returns></returns>
+
+    public string getCurrentStoryLine()
+    {
+        return storyTxt;
+    }
+}

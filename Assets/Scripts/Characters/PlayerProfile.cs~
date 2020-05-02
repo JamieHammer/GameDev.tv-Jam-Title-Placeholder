@@ -1,0 +1,47 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+/// <summary>
+/// Responsible for player stuff.
+/// </summary>
+
+public class PlayerProfile : MonoBehaviour
+{
+    public static PlayerProfile instance;
+
+    [SerializeField] string playerName;             // the username of the player
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    /// <summary>
+    /// Returns the player name as a string.
+    /// </summary>
+
+    public string GetName()
+    {
+        return playerName;
+    }
+}

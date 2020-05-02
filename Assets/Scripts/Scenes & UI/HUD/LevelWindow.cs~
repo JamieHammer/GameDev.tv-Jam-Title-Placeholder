@@ -1,0 +1,25 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+
+/// <summary>
+/// Responsible for UI related to the player's level.
+/// </summary>
+
+public class LevelWindow : MonoBehaviour
+{
+    TextMeshProUGUI levelText;              // reference to the text component
+    Image experienceBarImage;               // reference to the image component
+
+    private void Awake()
+    {
+        
+    }
+
+    void SetExperienceBarSize(float experienceNormalised)
+    {
+        experienceBarImage.fillAmount = experienceNormalised;
+    }
+}
