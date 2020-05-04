@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +9,9 @@ using UnityEngine;
 
 public class LevelSystem : MonoBehaviour
 {
+    public event EventHandler OnExperienceChanged;      // to subscribe to experience changes
+    public event EventHandler OnLevelChanged;           // to subscribe to level changes
+
     int level;                          // the current level of this character
     int experience;                     // the amount of experience gained already
     int experienceToNextLvl;            // the amount of experience needed to reach next level
@@ -31,13 +35,16 @@ public class LevelSystem : MonoBehaviour
     public void AddExperience(int amount)
     {
         experience += amount;
-        if (experience >= experienceToNextLvl)
+        while (experience >= experienceToNextLvl)
         {
             // enough experience to level up
 
             level++;
             experience -= experienceToNextLvl;
+            if (OnLevelChanged != null) OnLevelChanged(this, EventArgs.Empty);
         }
+
+        if (OnExperienceChanged != null) OnExperienceChanged(this, EventArgs.Empty);
     }
 
     /// <summary>

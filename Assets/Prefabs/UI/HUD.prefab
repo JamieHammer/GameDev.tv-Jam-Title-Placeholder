@@ -431,6 +431,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6b3a0f7224634deca50411324baac7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nameText: {fileID: 495055246514264032}
+  levelText: {fileID: 495055247710892304}
+  healthText: {fileID: 495055247838684302}
+  healthBar: {fileID: 495055247267737600}
+  experienceBar: {fileID: 495055247433059848}
+  healthFill: {fileID: 495055247732382652}
   player: {fileID: 0}
 --- !u!1 &495055247184474664
 GameObject:

@@ -16,6 +16,30 @@ public class CharacterStats : MonoBehaviour
 
     public LevelSystem levelSystem;     // the level system of this character
 
+    /// <summary>
+    /// Responsible for setting up the level system of this character.
+    /// </summary>
+    /// <param name="levelSystem">the level system to set as current</param>
+
+    public void SetLevelSystem(LevelSystem levelSystem)
+    {
+        this.levelSystem = levelSystem;
+
+        // subscribe to the on level changed, callback
+        levelSystem.OnLevelChanged += LevelSystem_OnLevelChanged;
+    }
+
+    /// <summary>
+    /// Subscribe to the level system's on level changed, callback.
+    /// </summary>
+
+    private void LevelSystem_OnLevelChanged(object sender, System.EventArgs e)
+    {
+        // todo implement level up
+
+        maxHealth += Mathf.CeilToInt(1f + levelSystem.GetLevelNumber());
+    }
+
     #endregion
 
     [Header("Health System")]

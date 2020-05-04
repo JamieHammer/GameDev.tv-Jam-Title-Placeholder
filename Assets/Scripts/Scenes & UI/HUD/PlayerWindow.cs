@@ -10,38 +10,22 @@ using TMPro;
 
 public class PlayerWindow : MonoBehaviour
 {
-    TextMeshProUGUI nameText;               // reference to the name text component
-    TextMeshProUGUI levelText;              // reference to the level text component
-    TextMeshProUGUI healthText;             // reference to the health text component
+    [SerializeField] TextMeshProUGUI nameText;                  // reference to the name text component
+    [SerializeField] TextMeshProUGUI levelText;                 // reference to the level text component
+    [SerializeField] TextMeshProUGUI healthText;                // reference to the health text component
 
-    Slider healthBar;                       // reference to the health slider component
-    Slider experienceBar;                   // reference to the experience slider component
+    [SerializeField] Slider healthBar;                          // reference to the health slider component
+    [SerializeField] Slider experienceBar;                      // reference to the experience slider component
 
-    Image healthFill;                       // reference to the image component of the health bar's fill area
+    [SerializeField] Image healthFill;                          // reference to the image component of the health bar's fill area
 
-    Color32 colourGreen = new Color32(125, 216, 87, 255);   // reference to the green health bar colour
-    Color32 colourYellow = new Color32(255, 189, 74, 255);  // reference to the yellow health bar colour
-    Color32 colourRed = new Color32(198, 68, 39, 255);      // reference to the red health bar colour
+    Color32 colourGreen = new Color32(125, 216, 87, 255);       // reference to the green health bar colour
+    Color32 colourYellow = new Color32(255, 189, 74, 255);      // reference to the yellow health bar colour
+    Color32 colourRed = new Color32(198, 68, 39, 255);          // reference to the red health bar colour
 
-    [SerializeField] PlayerStats player;    // reference to the current player stats
+    [SerializeField] PlayerStats player;                        // reference to the current player stats
 
-    private void Awake()
-    {
-        // NAME
-
-        nameText = transform.Find("nameText").GetComponent<TextMeshProUGUI>();
-
-        // HEALTH
-
-        healthBar = transform.Find("healthSlider").GetComponent<Slider>();
-        healthFill = healthBar.transform.Find("fillArea").Find("fill").GetComponent<Image>();
-        healthText = healthBar.transform.Find("levelText").GetComponent<TextMeshProUGUI>();
-
-        // EXPERIENCE
-
-        experienceBar = transform.Find("experienceSlider").GetComponent<Slider>();
-        levelText = transform.Find("levelText").GetComponent<TextMeshProUGUI>();
-    }
+    private LevelSystem levelSystem;                            // reference to the current level system
 
     /// <summary>
     /// Responsible for setting up the reference to the current player and update UI.
@@ -154,8 +138,8 @@ public class PlayerWindow : MonoBehaviour
 
     void UpdateExperience()
     {
-        SetExperienceBarSize(player.levelSystem.GetExperienceNormalised());
-        SetLevelNumber(player.levelSystem.GetLevelNumber());
+        SetExperienceBarSize(levelSystem.GetExperienceNormalised());
+        SetLevelNumber(levelSystem.GetLevelNumber());
     }
 
     /// <summary>
@@ -175,7 +159,45 @@ public class PlayerWindow : MonoBehaviour
 
     void SetLevelNumber(int levelNumber)
     {
-        levelText.text = "Level " + levelNumber + 1;
+        levelText.text = "Lvl " + (levelNumber + 1);
+    }
+
+    /// <summary>
+    /// Responsible for setting the current levelsystem.
+    /// </summary>
+    /// <param name="levelSystem">the level system to activate as current player</param>
+
+    public void SetLevelSystem(LevelSystem levelSystem)
+    {
+        // set the level system object
+        this.levelSystem = levelSystem;
+
+        // update the starting values
+        UpdateExperience();
+
+        // subscrie to the changed events
+        levelSystem.OnExperienceChanged += LevelSystem_OnExperienceChanged;
+        levelSystem.OnLevelChanged += LevelSystem_OnLevelChanged;
+    }
+
+    /// <summary>
+    /// Subscribe to the level system's on level changed, callback.
+    /// </summary>
+
+    private void LevelSystem_OnLevelChanged(object sender, System.EventArgs e)
+    {
+        // level changed, update text
+        SetLevelNumber(levelSystem.GetLevelNumber());
+    }
+
+    /// <summary>
+    /// Subscribe to the level system's on experience changed, callback.
+    /// </summary>
+
+    private void LevelSystem_OnExperienceChanged(object sender, System.EventArgs e)
+    {
+        // experience changed, update bar size
+        SetExperienceBarSize(levelSystem.GetExperienceNormalised());
     }
 
     #endregion
