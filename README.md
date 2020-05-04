@@ -21,6 +21,7 @@ TextMeshPro by Unity Technologies
 Cinemachine by Unity Technologies
 UI Pack: RPG Expansion by Kenney
 Free Platform Game Assets by Bayat Games
+Tasty Characters Packs by Severin Baclet
 
 ### Want To Join The Team?
 As of right now, we are a small indie team of little old me, backed by a small team of consultants. If you are interested in this project and think you can add value to it in any way, please reach out to us at skyhighstudios@gmail.com
