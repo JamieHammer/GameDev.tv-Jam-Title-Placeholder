@@ -35,8 +35,6 @@ public class LevelSystemAnimation
                 UpdateAddExperience();
             }
         }
-
-        Debug.Log(level + " " + experience);
     }
 
     /// <summary>
