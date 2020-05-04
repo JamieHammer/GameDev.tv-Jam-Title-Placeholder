@@ -10,7 +10,13 @@ public class Test : MonoBehaviour
     private void Awake()
     {
         LevelSystem levelSystem = new LevelSystem();
-        playerWindow.SetLevelSystem(levelSystem);
-        player.SetLevelSystem(levelSystem);
+
+        LevelSystemAnimation levelSystemAnimation = new LevelSystemAnimation(levelSystem);
+        playerWindow.SetLevelSystemAnimation(levelSystemAnimation);
+        player.SetLevelSystemAnimation(levelSystemAnimation);
+
+        string time = "" + System.DateTime.Now;
+
+        Debug.Log(time);
     }
 }

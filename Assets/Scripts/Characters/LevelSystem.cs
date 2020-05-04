@@ -7,7 +7,7 @@ using UnityEngine;
 /// Responsible for the level system.
 /// </summary>
 
-public class LevelSystem : MonoBehaviour
+public class LevelSystem
 {
     public event EventHandler OnExperienceChanged;      // to subscribe to experience changes
     public event EventHandler OnLevelChanged;           // to subscribe to level changes
@@ -51,19 +51,22 @@ public class LevelSystem : MonoBehaviour
     /// Returns the current level number of this character.
     /// </summary>
 
-    public int GetLevelNumber()
-    {
-        return level;
-    }
+    public int GetLevelNumber() { return level; }
 
     /// <summary>
     /// Returns the current experience of this character.
     /// </summary>
-    /// <returns></returns>
 
-    public int GetExperience()
+    public int GetExperience() { return experience; }
+
+    /// <summary>
+    /// Returns the experience needed for the next level.
+    /// </summary>
+    /// <param name="levelIndex">the index of the current level</param>
+
+    public int GetExperienceToNextLevel(int levelIndex)
     {
-        return experience;
+        return experienceToNextLvl * 10;
     }
 
     /// <summary>

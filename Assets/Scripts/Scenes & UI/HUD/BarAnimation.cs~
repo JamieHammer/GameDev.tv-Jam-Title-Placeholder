@@ -1,0 +1,50 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+/// <summary>
+/// Responsible for the animation of the experience and health bar on value change.
+/// </summary>
+
+public class BarAnimation
+{
+    private LevelSystem levelSystem;
+    private bool isAnimating;
+
+
+    public BarAnimation(LevelSystem levelSystem)
+    {
+        SetLevelSystem(levelSystem);
+    }
+
+    public void SetLevelSystem(LevelSystem levelSystem)
+    {
+        this.levelSystem = levelSystem;
+
+        levelSystem.OnExperienceChanged += LevelSystem_OnExperienceChanged;
+        levelSystem.OnLevelChanged += LevelSystem_OnLevelChanged;
+    }
+
+    private void LevelSystem_OnLevelChanged(object sender, EventArgs e)
+    {
+        throw new NotImplementedException();
+    }
+
+    private void LevelSystem_OnExperienceChanged(object sender, EventArgs e)
+    {
+        throw new NotImplementedException();
+    }
+
+    private void Update()
+    {
+        if (isAnimating)
+        {
+
+        }
+        else
+        {
+
+        }
+    }
+}

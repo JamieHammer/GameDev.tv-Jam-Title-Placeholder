@@ -14,30 +14,30 @@ public class CharacterStats : MonoBehaviour
 
     #region Level System
 
-    public LevelSystem levelSystem;     // the level system of this character
+    public LevelSystemAnimation levelSystemAnimation;     // the level system of this character
 
     /// <summary>
     /// Responsible for setting up the level system of this character.
     /// </summary>
-    /// <param name="levelSystem">the level system to set as current</param>
+    /// <param name="levelSystemAnimation">the level system to set as current</param>
 
-    public void SetLevelSystem(LevelSystem levelSystem)
+    public void SetLevelSystemAnimation(LevelSystemAnimation levelSystemAnimation)
     {
-        this.levelSystem = levelSystem;
+        this.levelSystemAnimation = levelSystemAnimation;
 
         // subscribe to the on level changed, callback
-        levelSystem.OnLevelChanged += LevelSystem_OnLevelChanged;
+        levelSystemAnimation.OnLevelChanged += LevelSystemAnimation_OnLevelChanged;
     }
 
     /// <summary>
     /// Subscribe to the level system's on level changed, callback.
     /// </summary>
 
-    private void LevelSystem_OnLevelChanged(object sender, System.EventArgs e)
+    private void LevelSystemAnimation_OnLevelChanged(object sender, System.EventArgs e)
     {
         // todo implement level up
 
-        maxHealth += Mathf.CeilToInt(1f + levelSystem.GetLevelNumber());
+        maxHealth += Mathf.CeilToInt(1f + levelSystemAnimation.GetLevelNumber());
     }
 
     #endregion
@@ -105,6 +105,16 @@ public class CharacterStats : MonoBehaviour
     public virtual void Die()
     {
         Debug.Log(transform.name + " died...");
+    }
+
+    /// <summary>
+    /// Responsible for setting the current health of the player on game load.
+    /// </summary>
+    /// <param name="loadedHealth">the current health of the player</param>
+
+    public void LoadCurrentHealth(int loadedHealth)
+    {
+        currentHealth = loadedHealth;
     }
 
     #endregion

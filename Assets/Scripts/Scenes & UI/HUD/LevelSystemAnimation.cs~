@@ -1,0 +1,106 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using CodeMonkey.Utils;     // to call the update method once every frame without using monodevelop, removing the need to put this script on an object
+
+/// <summary>
+/// Responsible for the animation of the experience bar on value change.
+/// </summary>
+
+public class LevelSystemAnimation : MonoBehaviour
+{
+    private LevelSystem levelSystem;
+    private bool isAnimating;
+
+    int level;                          // the current level of this character
+    int experience;                     // the amount of experience gained already
+    int experienceToNextLvl;            // the amount of experience needed to reach next level
+
+    private void Update()
+    {
+        if (isAnimating)
+        {
+            if (level < levelSystem.GetLevelNumber())
+            {
+                // local level is below target level
+
+                AddExperience();
+            }
+            else
+            {
+                // local level equals the target level
+
+                if (experience < levelSystem.GetExperience())
+                {
+                    AddExperience();
+                }
+                else
+                {
+                    isAnimating = false;
+                }
+            }
+        }
+
+        Debug.Log(level + " " + experience);
+    }
+
+    /// <summary>
+    /// Initialises the levelsystem.
+    /// </summary>
+
+    public LevelSystemAnimation(LevelSystem levelSystem)
+    {
+        SetLevelSystem(levelSystem);
+
+        FunctionUpdater.Create(() => Update());     // Code Monkey Utility
+    }
+
+    /// <summary>
+    /// Sets the current level system and updates the local parameters.
+    /// </summary>
+
+    public void SetLevelSystem(LevelSystem levelSystem)
+    {
+        this.levelSystem = levelSystem;
+
+        level = levelSystem.GetLevelNumber();
+        experience = levelSystem.GetExperience();
+        experienceToNextLvl = levelSystem.GetExperienceToNextLevel();
+
+        levelSystem.OnExperienceChanged += LevelSystem_OnExperienceChanged;
+        levelSystem.OnLevelChanged += LevelSystem_OnLevelChanged;
+    }
+
+    /// <summary>
+    /// Gets called everytime the player level changes.
+    /// </summary>
+
+    private void LevelSystem_OnLevelChanged(object sender, EventArgs e)
+    {
+        isAnimating = true;
+    }
+
+    /// <summary>
+    /// Gets called everytime the player experience changes.
+    /// </summary>
+
+    private void LevelSystem_OnExperienceChanged(object sender, EventArgs e)
+    {
+        isAnimating = true;
+    }
+
+    /// <summary>
+    /// Responsible for updating the local parameters.
+    /// </summary>
+
+    private void AddExperience()
+    {
+        experience++;
+        if (experience >= experienceToNextLvl)
+        {
+            level++;
+            experience = 0;
+        }
+    }
+}

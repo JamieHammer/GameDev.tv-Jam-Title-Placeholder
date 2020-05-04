@@ -10,6 +10,19 @@ using TMPro;
 
 public class PlayerWindow : MonoBehaviour
 {
+    #region Singleton
+    public static PlayerWindow instance;
+
+    void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(this);
+    }
+
+    #endregion
+
     [SerializeField] TextMeshProUGUI nameText;                  // reference to the name text component
     [SerializeField] TextMeshProUGUI levelText;                 // reference to the level text component
     [SerializeField] TextMeshProUGUI healthText;                // reference to the health text component
@@ -25,7 +38,7 @@ public class PlayerWindow : MonoBehaviour
 
     [SerializeField] PlayerStats player;                        // reference to the current player stats
 
-    private LevelSystem levelSystem;                            // reference to the current level system
+    private LevelSystemAnimation levelSystemAnimation;          // reference to the level system animator
 
     /// <summary>
     /// Responsible for setting up the reference to the current player and update UI.
@@ -138,8 +151,8 @@ public class PlayerWindow : MonoBehaviour
 
     void UpdateExperience()
     {
-        SetExperienceBarSize(levelSystem.GetExperienceNormalised());
-        SetLevelNumber(levelSystem.GetLevelNumber());
+        SetExperienceBarSize(levelSystemAnimation.GetExperienceNormalised());
+        SetLevelNumber(levelSystemAnimation.GetLevelNumber());
     }
 
     /// <summary>
@@ -163,41 +176,41 @@ public class PlayerWindow : MonoBehaviour
     }
 
     /// <summary>
-    /// Responsible for setting the current levelsystem.
+    /// Responsible for setting a reference to a level system animator.
     /// </summary>
-    /// <param name="levelSystem">the level system to activate as current player</param>
+    /// <param name="levelSystemAnimation">the level system animator to animate the experience bar</param>
 
-    public void SetLevelSystem(LevelSystem levelSystem)
+    public void SetLevelSystemAnimation(LevelSystemAnimation levelSystemAnimation)
     {
-        // set the level system object
-        this.levelSystem = levelSystem;
+        // set the level system animation object
+        this.levelSystemAnimation = levelSystemAnimation;
 
         // update the starting values
         UpdateExperience();
 
         // subscrie to the changed events
-        levelSystem.OnExperienceChanged += LevelSystem_OnExperienceChanged;
-        levelSystem.OnLevelChanged += LevelSystem_OnLevelChanged;
+        levelSystemAnimation.OnExperienceChanged += LevelSystemAnimation_OnExperienceChanged;
+        levelSystemAnimation.OnLevelChanged += LevelSystemAnimation_OnLevelChanged;
     }
 
     /// <summary>
     /// Subscribe to the level system's on level changed, callback.
     /// </summary>
 
-    private void LevelSystem_OnLevelChanged(object sender, System.EventArgs e)
+    private void LevelSystemAnimation_OnLevelChanged(object sender, System.EventArgs e)
     {
         // level changed, update text
-        SetLevelNumber(levelSystem.GetLevelNumber());
+        SetLevelNumber(levelSystemAnimation.GetLevelNumber());
     }
 
     /// <summary>
     /// Subscribe to the level system's on experience changed, callback.
     /// </summary>
 
-    private void LevelSystem_OnExperienceChanged(object sender, System.EventArgs e)
+    private void LevelSystemAnimation_OnExperienceChanged(object sender, System.EventArgs e)
     {
         // experience changed, update bar size
-        SetExperienceBarSize(levelSystem.GetExperienceNormalised());
+        SetExperienceBarSize(levelSystemAnimation.GetExperienceNormalised());
     }
 
     #endregion

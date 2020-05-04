@@ -12,6 +12,7 @@ public class PlayerData
     [Header("Info")]
 
     public string name;                 // name of the player
+    // date and time of save
 
     [Header("Level")]
 
@@ -46,8 +47,8 @@ public class PlayerData
 
         // LEVEL
 
-        level = player.levelSystem.GetLevelNumber();
-        experience = player.levelSystem.GetExperience();
+        level = player.levelSystemAnimation.GetLevelNumber();
+        experience = player.levelSystemAnimation.GetExperience();
 
         // HEALTH
 
