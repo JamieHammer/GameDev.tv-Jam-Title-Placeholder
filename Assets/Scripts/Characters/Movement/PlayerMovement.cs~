@@ -1,0 +1,17 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+/// <summary>
+/// Takes user input and converts it to player movement.
+/// </summary>
+
+public class PlayerMovement : MonoBehaviour
+{
+    CharacterController2D controller;
+
+    private void Start()
+    {
+        controller = GetComponent<CharacterController2D>();
+    }
+}
