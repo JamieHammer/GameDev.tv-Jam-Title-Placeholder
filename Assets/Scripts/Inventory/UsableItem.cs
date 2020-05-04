@@ -9,7 +9,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Usable Item", menuName = "Inventory/Usable Item ")]
 public class UsableItem : Item
 {
-    PlayerStats player;
+    Player  player;
 
     /// <summary>
     /// Overrides the Item use function, to equip item.

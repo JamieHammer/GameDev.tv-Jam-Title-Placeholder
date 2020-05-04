@@ -28,7 +28,7 @@ public class CharacterUI : MonoBehaviour
 
     #endregion
 
-    [SerializeField] PlayerStats currentStats;       // the character stats of the player
+    [SerializeField] Player  currentStats;       // the character stats of the player
 
     [Header("")]
 
@@ -55,7 +55,7 @@ public class CharacterUI : MonoBehaviour
     /// Returns the current stats for the abilities UI class to use.
     /// </summary>
 
-    public PlayerStats GetCurrentStats()
+    public Player  GetCurrentStats()
     {
         return currentStats;
     }

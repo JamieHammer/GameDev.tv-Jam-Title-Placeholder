@@ -1,12 +1,38 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+#region SaveFile
+
+/// <summary>
+/// A save file to hold game data.
+/// </summary>
+
+[Serializable]
+public class SaveData
+{
+    public PlayerData playerData { get; set; }
+
+    /// <summary>
+    /// The save data file construct.
+    /// </summary>
+
+    public SaveData()
+    {
+
+    }
+}
+
+#endregion
+
+#region Data Holders
 
 /// <summary>
 /// Helps with saving player data.
 /// </summary>
 
-    [System.Serializable]
+[Serializable]
 public class PlayerData
 {
     [Header("Info")]
@@ -39,7 +65,7 @@ public class PlayerData
 
     public float[] position;            // an array of floats corresponding to a player position
 
-    public PlayerData(PlayerStats player)
+    public PlayerData(Player player)
     {
         // INFO
 
@@ -74,4 +100,5 @@ public class PlayerData
         position[2] = player.transform.position.z;
     }
 
+    #endregion
 }

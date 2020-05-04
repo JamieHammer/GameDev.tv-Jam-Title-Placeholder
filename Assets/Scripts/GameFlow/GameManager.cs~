@@ -2,14 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class QuestGiver : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
-    public Quest quest;
-
-    public State beginningState;
-
-    public PlayerStats player;
-
     // Start is called before the first frame update
     void Start()
     {

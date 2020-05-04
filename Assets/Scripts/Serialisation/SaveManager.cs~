@@ -1,0 +1,42 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+/// <summary>
+/// Manages the save system.
+/// </summary>
+
+public class SaveManager : MonoBehaviour
+{
+    #region Singleton
+
+    public static SaveManager instance;
+
+    void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(this);
+    }
+
+    #endregion
+
+    /// <summary>
+    /// Responsible for saving the game.
+    /// </summary>
+
+    public static void SaveGame()
+    {
+        try
+        {
+
+        }
+        catch (System.Exception ex)
+        {
+            Debug.Log("Something went wrong, trying to save the game...");
+        }
+    }
+
+
+}

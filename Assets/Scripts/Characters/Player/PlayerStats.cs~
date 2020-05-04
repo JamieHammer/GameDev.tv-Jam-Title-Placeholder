@@ -6,7 +6,7 @@ using UnityEngine;
 /// To manage everything related to the player.
 /// </summary>
 
-public class PlayerStats : CharacterStats
+public class Player : CharacterStats
 {
     Transform playerTransform;          // reference to the player transform
 

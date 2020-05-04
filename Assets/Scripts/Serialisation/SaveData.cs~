@@ -1,15 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 
-public class HudCtrl : MonoBehaviour
+/// <summary>
+/// A save file to save the player progress.
+/// </summary>
+
+public class SaveData : MonoBehaviour
 {
-    public Slider healthBar;
-    public TextMeshProUGUI nameText;
-    public TextMeshProUGUI lvlText;
-
     // Start is called before the first frame update
     void Start()
     {

@@ -16,7 +16,7 @@ public class StoryManager : MonoBehaviour
     [SerializeField] State startingState;                   // reference to the starting story state
 
     ChoiceManager choiceManager;                            // reference to the choice manager
-    [SerializeField] PlayerStats player;                    // reference to the player
+    Player  player;                                         // reference to the player instance
 
     State currentState;                                     // reference to the current state of the story
 
@@ -37,6 +37,8 @@ public class StoryManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        player = Player.instance;
+
         UpdateStory();
     }
 
@@ -73,10 +75,6 @@ public class StoryManager : MonoBehaviour
 
         switch (currentState.GetStateType())
         {
-            case StateType.Battle:
-                BattleState();
-                break;
-
             case StateType.Buy:
                 ItemState();
                 break;
@@ -118,7 +116,7 @@ public class StoryManager : MonoBehaviour
         return currentState;
     }
 
-    public PlayerStats GetPlayer()
+    public Player  GetPlayer()
     {
         return player;
     }
@@ -144,10 +142,5 @@ public class StoryManager : MonoBehaviour
                 Debug.Log("player should have received: " + currentState.GetItem());
             }
         }
-    }
-
-    public void BattleState()
-    {
-        BattleSpawner.instance.SpawnBattleSystem();
     }
 }

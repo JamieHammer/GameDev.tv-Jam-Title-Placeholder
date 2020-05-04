@@ -1,0 +1,45 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+/// <summary>
+/// 
+/// </summary>
+
+public class Player : MonoBehaviour
+{
+    #region Singleton
+    public static Player instance;
+
+    void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(this);
+    }
+
+    #endregion
+
+    PlayerData playerData;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+
+    public PlayerData GetPlayerData()
+    {
+        return playerData;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="newPlayerData"></param>
+
+    public void SetPlayerData(PlayerData newPlayerData)
+    {
+        // todo
+    }
+}

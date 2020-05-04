@@ -16,15 +16,17 @@ public class LevelSystem
     int experience;                     // the amount of experience gained already
     int experienceToNextLvl;            // the amount of experience needed to reach next level
 
+    [SerializeField] int baseExp;       // the base amount of xp needed for next level
+
     /// <summary>
     /// Constructs a level system from the class.
     /// </summary>
 
-    public LevelSystem ()
+    public LevelSystem (int levelNew, int experienceNew)
     {
-        level = 0;
-        experience = 0;
-        experienceToNextLvl = 100;
+        level = levelNew;
+        experience = experienceNew;
+        experienceToNextLvl = baseExp;
     }
 
     /// <summary>

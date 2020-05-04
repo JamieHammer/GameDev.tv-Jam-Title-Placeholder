@@ -11,7 +11,7 @@ public class AbilityUI : MonoBehaviour
 
     AbilityCtrl[] currentAbilities;             // an array of ability controllers
 
-    PlayerStats currentStats;                   // reference to the current stats
+    Player  currentStats;                       // reference to the current stats
 
     // Start is called before the first frame update
     void Start()

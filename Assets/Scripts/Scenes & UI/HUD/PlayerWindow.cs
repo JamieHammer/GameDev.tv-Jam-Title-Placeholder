@@ -36,7 +36,7 @@ public class PlayerWindow : MonoBehaviour
     Color32 colourYellow = new Color32(255, 189, 74, 255);      // reference to the yellow health bar colour
     Color32 colourRed = new Color32(198, 68, 39, 255);          // reference to the red health bar colour
 
-    [SerializeField] PlayerStats player;                        // reference to the current player stats
+    [SerializeField] Player player;                        // reference to the current player stats
 
     private LevelSystemAnimation levelSystemAnimation;          // reference to the level system animator
 
@@ -45,7 +45,7 @@ public class PlayerWindow : MonoBehaviour
     /// </summary>
     /// <param name="playerStats">the stats of the player</param>
 
-    public void SetPlayer(PlayerStats playerStats)
+    public void SetPlayer(Player playerStats)
     {
         player = playerStats;
 

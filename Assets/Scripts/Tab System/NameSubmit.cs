@@ -11,8 +11,6 @@ public class NameSubmit : MonoBehaviour
 {
     public TMP_InputField playerName;
 
-    public PlayerStats player;
-
     public State state;
 
     StoryManager storyManager;
@@ -26,7 +24,7 @@ public class NameSubmit : MonoBehaviour
     {
         if (playerName.text != "")
         {
-            player.characterName = playerName.text;
+            Player.instance.characterName = playerName.text;
 
             storyManager.AdvanceStory(state);
 

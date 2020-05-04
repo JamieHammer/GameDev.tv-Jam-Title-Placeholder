@@ -149,8 +149,5 @@ public class CharacterStats : MonoBehaviour
         luck.SetName("Luck");
         attack.SetName("Attack");
         defence.SetName("Defence");
-
-        // todo load from data instead
-        currentHealth = maxHealth;
     }
 }
