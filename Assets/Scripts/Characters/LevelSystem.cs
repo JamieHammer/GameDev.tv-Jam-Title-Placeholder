@@ -16,7 +16,7 @@ public class LevelSystem
     int experience;                     // the amount of experience gained already
     int experienceToNextLvl;            // the amount of experience needed to reach next level
 
-    [SerializeField] int baseExp;       // the base amount of xp needed for next level
+    int baseExp = 100;                  // the base amount of xp needed for the next level
 
     /// <summary>
     /// Constructs a level system from the class.
@@ -37,12 +37,12 @@ public class LevelSystem
     public void AddExperience(int amount)
     {
         experience += amount;
-        while (experience >= experienceToNextLvl)
+        while (experience >= GetExperienceToNextLevel(level))
         {
             // enough experience to level up
 
             level++;
-            experience -= experienceToNextLvl;
+            experience -= GetExperienceToNextLevel(level);
             if (OnLevelChanged != null) OnLevelChanged(this, EventArgs.Empty);
         }
 
@@ -77,6 +77,6 @@ public class LevelSystem
 
     public float GetExperienceNormalised()
     {
-        return (float)experience / experienceToNextLvl;
+        return (float)experience / GetExperienceToNextLevel(level);
     }
 }

@@ -142,7 +142,7 @@ public class LevelSystemAnimation
 
     public int GetExperienceToNextLevel(int levelIndex)
     {
-        return levelSystem.GetExperienceToNextLevel(level) * 10;
+        return levelSystem.GetExperienceToNextLevel(levelIndex) * 10;
     }
 
     /// <summary>

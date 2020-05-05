@@ -19,6 +19,8 @@ public class PlayerWindow : MonoBehaviour
             instance = this;
         else
             Destroy(this);
+
+        player = Player.instance;
     }
 
     #endregion
@@ -36,19 +38,16 @@ public class PlayerWindow : MonoBehaviour
     Color32 colourYellow = new Color32(255, 189, 74, 255);      // reference to the yellow health bar colour
     Color32 colourRed = new Color32(198, 68, 39, 255);          // reference to the red health bar colour
 
-    [SerializeField] Player player;                        // reference to the current player stats
+    Player player;                                              // reference to the current player stats
 
     private LevelSystemAnimation levelSystemAnimation;          // reference to the level system animator
 
     /// <summary>
     /// Responsible for setting up the reference to the current player and update UI.
     /// </summary>
-    /// <param name="playerStats">the stats of the player</param>
 
-    public void SetPlayer(Player playerStats)
+    public void SetPlayer()
     {
-        player = playerStats;
-
         UpdateName();
 
         UpdateHealth();
@@ -82,6 +81,11 @@ public class PlayerWindow : MonoBehaviour
 
     void UpdateName()
     {
+        if (player == null)
+        {
+            player = Player.instance;
+        }
+
         nameText.text = player.characterName;
     }
 
@@ -153,6 +157,9 @@ public class PlayerWindow : MonoBehaviour
     {
         SetExperienceBarSize(levelSystemAnimation.GetExperienceNormalised());
         SetLevelNumber(levelSystemAnimation.GetLevelNumber());
+
+        Debug.Log(levelSystemAnimation.GetExperienceNormalised());
+        Debug.Log(levelSystemAnimation.GetLevelNumber());
     }
 
     /// <summary>
@@ -188,7 +195,7 @@ public class PlayerWindow : MonoBehaviour
         // update the starting values
         UpdateExperience();
 
-        // subscrie to the changed events
+        // subscribe to the changed events
         levelSystemAnimation.OnExperienceChanged += LevelSystemAnimation_OnExperienceChanged;
         levelSystemAnimation.OnLevelChanged += LevelSystemAnimation_OnLevelChanged;
     }

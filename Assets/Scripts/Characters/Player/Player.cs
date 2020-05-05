@@ -56,7 +56,7 @@ public class Player : CharacterStats
 
     public void AddExperience(int amount)
     {
-        Debug.Log("Add " + amount + " of XP");
+        Debug.Log("Added " + amount + " XP");
 
         levelSystem.AddExperience(amount);
     }
@@ -69,7 +69,10 @@ public class Player : CharacterStats
     {
         levelSystem = new LevelSystem(0, 0);
 
+        LoadCurrentHealth(maxHealth);
+
         levelSystemAnimation = new LevelSystemAnimation(levelSystem);
+        playerWindow.SetLevelSystemAnimation(levelSystemAnimation);
         SetLevelSystemAnimation(levelSystemAnimation);
 
         UpdateUI();
@@ -97,6 +100,7 @@ public class Player : CharacterStats
 
             levelSystemAnimation = new LevelSystemAnimation(levelSystem);
             SetLevelSystemAnimation(levelSystemAnimation);
+            playerWindow.SetLevelSystemAnimation(levelSystemAnimation);
 
 
 
@@ -138,8 +142,6 @@ public class Player : CharacterStats
 
     public void UpdateUI()
     {
-        playerWindow.SetLevelSystemAnimation(levelSystemAnimation);
-
-        // todo
+        playerWindow.SetPlayer();
     }
 }
