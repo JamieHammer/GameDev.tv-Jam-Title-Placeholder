@@ -141,7 +141,7 @@ public class Player : CharacterStats
         }
         else
         {
-            Debug.Log("Meuh");
+            Debug.LogError("Save file not found...");
         }
     }
 
@@ -152,6 +152,8 @@ public class Player : CharacterStats
 
     public void TakeDamage(int amount)
     {
+        Debug.Log("Showing hurt animation.");
+
         bool isDead = healthSystem.TakeDamage(amount, defence.GetValue());
         playerWindow.SetHP();
 
@@ -183,6 +185,10 @@ public class Player : CharacterStats
         levelSystem.AddExperience(amount);
         playerWindow.SetExperience();
     }
+
+    /// <summary>
+    /// Responsible for updating the player window UI.
+    /// </summary>
 
     public void UpdateUI()
     {

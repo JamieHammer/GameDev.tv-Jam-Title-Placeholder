@@ -19,7 +19,7 @@ public class CharacterController2D : MonoBehaviour
     const float k_GroundedRadius = .2f;                                         // radius of the overlap circle to determine if grounded
     private bool m_Grounded;                                                    // whether or not the player is grounded
     const float k_CeilingRadius = .2f;                                          // radius of the overlap circle to determine if the player can stand up
-    private bool m_FacingLeft = true;                                          // for determining which way the player is currently facing
+    private bool m_FacingLeft = true;                                           // for determining which way the player is currently facing
 
     private Rigidbody2D m_Rigidbody2D;
     private Vector3 m_Velocity = Vector3.zero;
@@ -166,5 +166,23 @@ public class CharacterController2D : MonoBehaviour
     public bool isGrounded()
     {
         return m_Grounded;
+    }
+
+    /// <summary>
+    /// Responsible for flipping the player on game load.
+    /// </summary>
+
+    public void FlipPlayer()
+    {
+        Flip();
+    }
+
+    /// <summary>
+    /// Returns a bool whether or not the player was turning left on save.
+    /// </summary>
+
+    public bool WasFacingLeft()
+    {
+        return m_FacingLeft;
     }
 }

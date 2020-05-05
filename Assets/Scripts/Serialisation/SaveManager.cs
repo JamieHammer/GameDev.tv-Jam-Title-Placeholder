@@ -27,6 +27,7 @@ public class SaveManager : MonoBehaviour
     public static string path;
 
     Player player;              // reference to the player
+    Chest[] chests;             // reference to all chests
 
     private void Start()
     {

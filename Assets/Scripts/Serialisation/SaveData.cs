@@ -12,7 +12,9 @@ using UnityEngine;
 [Serializable]
 public class SaveData
 {
-    public PlayerData playerData { get; set; }
+    public PlayerData playerData { get; set; }              // the player data
+
+    public List<ChestData> chestData { get; set; }          // a list of chest data
 
     /// <summary>
     /// The save data file construct.
@@ -20,7 +22,7 @@ public class SaveData
 
     public SaveData()
     {
-
+        chestData = new List<ChestData>();
     }
 }
 
@@ -64,6 +66,10 @@ public class PlayerData
 
     public float[] position;            // an array of floats corresponding to a player position
 
+    /// <summary>
+    /// Player data constructor.
+    /// </summary>
+
     public PlayerData(Player player)
     {
         // INFO
@@ -96,6 +102,124 @@ public class PlayerData
         position[0] = player.transform.position.x;
         position[1] = player.transform.position.y;
     }
-
-    #endregion
 }
+
+/// <summary>
+/// Helps with saving item data.
+/// </summary>
+
+[Serializable]
+public class ItemData
+{
+    [Header("Info")]
+
+    public string name;                 // name of the item
+
+    public int stackCount;              // the amount of items held
+
+    public int slotIndex;               // the slot index of the item
+
+    /// <summary>
+    /// Item data constructor.
+    /// </summary>
+
+    public ItemData(Item item)
+    {
+        // INFO
+
+        name = item.GetName();
+    }
+}
+
+/// <summary>
+/// Helps with saving chest data.
+/// </summary>
+
+[Serializable]
+public class ChestData
+{
+    [Header("Info")]
+
+    public string name;                 // name of the item
+
+    public List<Item> items;            // a list of items contained in the chest
+
+    /// <summary>
+    /// Item data constructor.
+    /// </summary>
+
+    public ChestData(Chest chest)
+    {
+        // INFO
+
+        name = "";
+    }
+}
+
+/// <summary>
+/// Helps with saving quest data.
+/// </summary>
+
+[Serializable]
+public class QuestData
+{
+    [Header("Info")]
+
+    public string name;                 // name of the quest
+
+    /// <summary>
+    /// Item data constructor.
+    /// </summary>
+
+    public QuestData()
+    {
+        // INFO
+
+        name = "";
+    }
+}
+
+/// <summary>
+/// Helps with saving save slot data.
+/// </summary>
+
+[Serializable]
+public class SaveSlotData
+{
+    [Header("Info")]
+
+    public string playerName;                   // name of the item
+
+    public string playerLevel;                  // the level of the player
+
+    public string location;                     // the location of the save
+
+    public string chapter;                      // the reached chapter of the main story
+
+    public string playTime;                     // the number of hours and minutes played
+
+    public string lastPlayed;                   // the date and time of the last play session
+
+    /// <summary>
+    /// Item data constructor.
+    /// </summary>
+
+    public SaveSlotData()
+    {
+        // INFO
+
+        playerName = "";
+
+        playerLevel = "";
+
+        location = "";
+
+        chapter = "";
+
+        playTime = "";
+
+        lastPlayed = "";
+    }
+}
+
+#endregion
