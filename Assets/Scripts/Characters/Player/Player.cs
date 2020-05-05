@@ -57,6 +57,8 @@ public class Player : CharacterStats
     public void AddExperience(int amount)
     {
         Debug.Log("Added " + amount + " XP");
+        Debug.Log("Experience: " + levelSystem.GetExperience());
+        Debug.Log("Normalised: " + levelSystem.GetExperienceNormalised());
 
         levelSystem.AddExperience(amount);
     }

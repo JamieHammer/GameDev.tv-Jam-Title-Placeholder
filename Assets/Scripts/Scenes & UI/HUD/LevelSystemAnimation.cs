@@ -120,7 +120,10 @@ public class LevelSystemAnimation
         {
             level++;
             experience = 0;
+            if (OnLevelChanged != null) OnLevelChanged(this, EventArgs.Empty);
         }
+
+        if (OnExperienceChanged != null) OnExperienceChanged(this, EventArgs.Empty);
     }
 
     /// <summary>
