@@ -136,6 +136,8 @@ public class Player : CharacterStats
             float y = data.position[1];
 
             playerTransform.position = new Vector2(x, y);
+
+            CameraReset.instance.ResetCamera();
         }
         else
         {
