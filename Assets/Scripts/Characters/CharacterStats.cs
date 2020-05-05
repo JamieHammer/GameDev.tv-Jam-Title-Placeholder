@@ -37,84 +37,39 @@ public class CharacterStats : MonoBehaviour
     {
         // todo implement level up
 
-        maxHealth += Mathf.CeilToInt(1f + levelSystemAnimation.GetLevelNumber());
+        // sfx
+
+        // particle effect
     }
 
     #endregion
 
     [Header("Health System")]
 
-    #region Health System
+    #region  Health System
 
-    public int maxHealth = 100;         // the max health points of this character
-    public int currentHealth { get; private set; }
+    public HealthSystemAnimation healthSystemAnimation;     // the health system of this character
 
     /// <summary>
-    /// Returns the percentage of remaining health.
+    /// Responsible for setting up the health system of this character.
     /// </summary>
+    /// <param name="healthSystemAnimation">the health system to set as current</param>
 
-    public float GetHealthNormalised()
+    public void SetHealthSystemAnimation(HealthSystemAnimation healthSystemAnimation)
     {
-        return currentHealth / maxHealth;
+        this.healthSystemAnimation = healthSystemAnimation;
+
+        // subscribe to the on health changed, callback
+        healthSystemAnimation.OnHealthChanged += HealthSystemAnimation_OnHealthChanged;
     }
 
     /// <summary>
-    /// Responsible for dealing damage to this character and sends a bool whether or not the character has died.
-    /// </summary>
-    /// <param name="damage">the amount of damage to subtract</param>
-
-    public bool TakeDamage(int damage)
-    {
-        damage -= defence.GetValue();
-        damage = Mathf.Clamp(damage, 0, int.MaxValue);
-
-        currentHealth -= damage;
-
-        if (currentHealth <= 0)
-        {
-            Die();
-
-            return true;
-        }
-
-        return false;
-    }
-
-    /// <summary>
-    /// Responsible for replenishing health to this character.
-    /// </summary>
-    /// <param name="healAmount">the amount of health to replenish</param>
-
-    public void Heal(int healAmount)
-    {
-        if (currentHealth + healAmount > maxHealth)
-        {
-            // can't have more than max health
-            currentHealth = maxHealth;
-        }
-        else
-        {
-            currentHealth += healAmount;
-        }
-    }
-
-    /// <summary>
-    /// Meant to be overriden by the character dying.
+    /// Subscribe to the health system's on health changed, callback.
     /// </summary>
 
-    public virtual void Die()
+    private void HealthSystemAnimation_OnHealthChanged(object sender, System.EventArgs e)
     {
-        Debug.Log(transform.name + " died...");
-    }
-
-    /// <summary>
-    /// Responsible for setting the current health of the player on game load.
-    /// </summary>
-    /// <param name="loadedHealth">the current health of the player</param>
-
-    public void LoadCurrentHealth(int loadedHealth)
-    {
-        currentHealth = loadedHealth;
+        // todo implement affordance when taking or dealing damage
     }
 
     #endregion

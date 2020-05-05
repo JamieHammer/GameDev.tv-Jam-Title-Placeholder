@@ -23,6 +23,7 @@ public class Player : CharacterStats
 
     PlayerWindow playerWindow;                  // reference to the player HUD window
     LevelSystem levelSystem;                    // reference to the level system of this player
+    HealthSystem healthSystem;                  // reference to the health system of this player
 
     Transform playerTransform;                  // reference to the player transform
     CharacterController2D characterController;  // reference to the character controller component on the player
@@ -53,22 +54,6 @@ public class Player : CharacterStats
     }
 
     /// <summary>
-    /// Responsible for adding the experience and act accordingly.
-    /// </summary>
-    /// <param name="amount">Amount of experience to add</param>
-
-    public void AddExperience(int amount)
-    {
-        Debug.Log(levelSystem.GetExperience());
-
-        levelSystem.AddExperience(amount);
-        playerWindow.SetExperience();
-
-        Debug.Log("add: " + amount);
-        Debug.Log(levelSystem.GetExperience());
-    }
-
-    /// <summary>
     /// Responsible for creating a new player.
     /// </summary>
 
@@ -79,13 +64,23 @@ public class Player : CharacterStats
             playerWindow = PlayerWindow.instance;
         }
 
+        // LEVEL SYSTEM
+
         levelSystem = new LevelSystem(1, 0);
-
-        LoadCurrentHealth(maxHealth);
-
         levelSystemAnimation = new LevelSystemAnimation(levelSystem);
+
         playerWindow.SetLevelSystemAnimation(levelSystemAnimation);
         SetLevelSystemAnimation(levelSystemAnimation);
+
+        // HEALTH SYSTEM
+
+        healthSystem = new HealthSystem(levelSystem.GetLevelNumber(), 0);
+        healthSystemAnimation = new HealthSystemAnimation(healthSystem);
+
+        playerWindow.SetHealthSystemAnimation(healthSystemAnimation);
+        SetHealthSystemAnimation(healthSystemAnimation);
+
+        // UPDATE UI
 
         UpdateUI();
     }
@@ -114,18 +109,15 @@ public class Player : CharacterStats
             SetLevelSystemAnimation(levelSystemAnimation);
             playerWindow.SetLevelSystemAnimation(levelSystemAnimation);
 
-
-
-            string time = "" + System.DateTime.Now;
-
-            Debug.Log(time);
-
-            
-
             // HEALTH
 
-            maxHealth = data.maxHealth;
-            LoadCurrentHealth(data.currentHealth);
+            int currentHealth = data.currentHealth;
+
+            healthSystem = new HealthSystem(level, currentHealth);
+
+            healthSystemAnimation = new HealthSystemAnimation(healthSystem);
+            SetHealthSystemAnimation(healthSystemAnimation);
+            playerWindow.SetHealthSystemAnimation(healthSystemAnimation);
 
             // ABILITIES
 
@@ -142,9 +134,8 @@ public class Player : CharacterStats
 
             float x = data.position[0];
             float y = data.position[1];
-            float z = data.position[2];
 
-            playerTransform.position.Set(x, y, z);
+            playerTransform.position = new Vector2(x, y);
         }
         else
         {
@@ -152,23 +143,43 @@ public class Player : CharacterStats
         }
     }
 
-    // Debug
+    /// <summary>
+    /// Responsible for adding the experience and act accordingly.
+    /// </summary>
+    /// <param name="amount">Amount of experience to add</param>
 
-    public void TakePlayerDamage(int damage)
+    public void TakeDamage(int amount)
     {
-
-
-        bool isDead = TakeDamage(damage);
+        bool isDead = healthSystem.TakeDamage(amount, defence.GetValue());
         playerWindow.SetHP();
-
-        Debug.Log("Player has taken " + damage + " in damage" + "\n" +
-            "Remaining health: " + currentHealth);
 
         if (isDead)
         {
             //characterController.Die();
             Debug.Log("Showing death animation.");
         }
+    }
+
+    /// <summary>
+    /// Responsible for adding the health to the player.
+    /// </summary>
+    /// <param name="amount">Amount of experience to add</param>
+
+    public void Heal(int amount)
+    {
+        healthSystem.AddHealth(amount);
+        playerWindow.SetHP();
+    }
+
+    /// <summary>
+    /// Responsible for adding the experience and act accordingly.
+    /// </summary>
+    /// <param name="amount">Amount of experience to add</param>
+
+    public void AddExperience(int amount)
+    {
+        levelSystem.AddExperience(amount);
+        playerWindow.SetExperience();
     }
 
     public void UpdateUI()

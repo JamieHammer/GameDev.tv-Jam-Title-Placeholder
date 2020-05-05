@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Responsible for the level system.
+/// Responsible for the character level system.
 /// </summary>
 
 public class LevelSystem

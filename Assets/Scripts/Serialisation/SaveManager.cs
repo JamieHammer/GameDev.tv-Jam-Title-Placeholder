@@ -30,7 +30,7 @@ public class SaveManager : MonoBehaviour
 
     private void Start()
     {
-        SaveManager.path = Application.persistentDataPath + "/SaveFile.dat";
+        SaveManager.path = Application.persistentDataPath + "/SaveTest.dat";
 
         player = Player.instance;
     }
@@ -52,12 +52,12 @@ public class SaveManager : MonoBehaviour
     /// Responsible for saving the game.
     /// </summary>
 
-    public void SaveGame()
+    private void SaveGame()
     {
         try
         {
             BinaryFormatter formatter = new BinaryFormatter();
-            FileStream stream = File.Open(path, FileMode.OpenOrCreate);
+            FileStream stream = File.Open(path, FileMode.Create);
 
             SaveData data = new SaveData();
 
@@ -68,7 +68,7 @@ public class SaveManager : MonoBehaviour
 
             Debug.Log("Game has been saved!");
         }
-        catch (System.Exception ex)
+        catch (System.Exception)
         {
             Debug.Log("Something went wrong, trying to save the game...");
         }
@@ -78,7 +78,7 @@ public class SaveManager : MonoBehaviour
     /// Responsible for loading the game file.
     /// </summary>
 
-    public void LoadGame()
+    private void LoadGame()
     {
         try
         {
@@ -93,7 +93,7 @@ public class SaveManager : MonoBehaviour
 
             Debug.Log("Game has been loaded!");
         }
-        catch (System.Exception ex)
+        catch (System.Exception)
         {
             Debug.Log("Something went wrong, trying to load the game file...");
         }

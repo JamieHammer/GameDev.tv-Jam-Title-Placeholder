@@ -47,7 +47,6 @@ public class PlayerData
 
     [Header("Health")]
 
-    public int maxHealth;               // max health of the player
     public int currentHealth;           // remaining health of the player
 
     [Header("Abilities")]
@@ -78,8 +77,7 @@ public class PlayerData
 
         // HEALTH
 
-        maxHealth = player.maxHealth;
-        currentHealth = player.currentHealth;
+        currentHealth = player.healthSystemAnimation.GetCurrentHealth();
 
         // ABILITIES
 
@@ -94,10 +92,9 @@ public class PlayerData
 
         // POSITION
 
-        position = new float[3];
+        position = new float[2];
         position[0] = player.transform.position.x;
         position[1] = player.transform.position.y;
-        position[2] = player.transform.position.z;
     }
 
     #endregion

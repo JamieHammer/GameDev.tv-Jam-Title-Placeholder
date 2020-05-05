@@ -41,6 +41,7 @@ public class PlayerWindow : MonoBehaviour
     Player player;                                              // reference to the current player stats
 
     private LevelSystemAnimation levelSystemAnimation;          // reference to the level system animator
+    private HealthSystemAnimation healthSystemAnimation;        // reference to the health system animator
 
     /// <summary>
     /// Responsible for setting up the reference to the current player and update UI.
@@ -99,14 +100,15 @@ public class PlayerWindow : MonoBehaviour
 
     void UpdateHealth()
     {
-        SetHealthBarSize(player.GetHealthNormalised());
-        SetHealthStatus(player.currentHealth);
+        SetHealthBarSize(healthSystemAnimation.GetHealthNormalised());
+        SetHealthStatus(healthSystemAnimation.GetCurrentHealth(),
+            healthSystemAnimation.GetMaxHealth());
     }
 
     /// <summary>
-    /// Responsible for showing the remaining health in relation to max health.
+    /// Responsible for showing the progress in relation to the max health.
     /// </summary>
-    /// <param name="healthNormalised">the remaining health</param>
+    /// <param name="healthNormalised">the health in relation to max health</param>
 
     void SetHealthBarSize(float healthNormalised)
     {
@@ -140,9 +142,53 @@ public class PlayerWindow : MonoBehaviour
     /// Responsible for showing the remaining health.
     /// </summary>
 
-    void SetHealthStatus(int currentHealth)
+    void SetHealthStatus(int currentHealth, int maxHealth)
     {
-        healthText.text = currentHealth + "/" + player.maxHealth;
+        healthText.text = currentHealth + "/" + maxHealth;
+    }
+
+    /// <summary>
+    /// Responsible for setting a reference to a health system animator.
+    /// </summary>
+    /// <param name="healthSystemAnimation">the health system animator to animate the health bar</param>
+
+    public void SetHealthSystemAnimation(HealthSystemAnimation healthSystemAnimation)
+    {
+        // set the health system animation object
+        this.healthSystemAnimation = healthSystemAnimation;
+
+        // update the starting values
+        UpdateHealth();
+
+        // subscribe to the health changed, callbacks
+        healthSystemAnimation.OnHealthChanged += HealthSystemAnimation_OnHealthChanged;
+        healthSystemAnimation.OnMaxHealthChanged += HealthSystemAnimation_OnMaxHealthChanged;
+    }
+
+    /// <summary>
+    /// Subscribe to the health system's on health changed, callback.
+    /// </summary>
+
+    private void HealthSystemAnimation_OnHealthChanged(object sender, System.EventArgs e)
+    {
+        // health changed, update bar size
+        SetHealthBarSize(healthSystemAnimation.GetHealthNormalised());
+
+        SetHealthStatus(healthSystemAnimation.GetCurrentHealth(),
+            healthSystemAnimation.GetMaxHealth());
+    }
+
+    /// <summary>
+    /// Subscribe to the health system's on max health changed, callback.
+    /// </summary>
+
+    private void HealthSystemAnimation_OnMaxHealthChanged(object sender, System.EventArgs e)
+    {
+        // health changed, update bar size
+        SetHealthBarSize(healthSystemAnimation.GetHealthNormalised());
+
+        SetHealthStatus(healthSystemAnimation.GetCurrentHealth(),
+            healthSystemAnimation.GetMaxHealth());
     }
 
     #endregion
@@ -205,8 +251,6 @@ public class PlayerWindow : MonoBehaviour
     {
         // level changed, update text
         SetLevelNumber(levelSystemAnimation.GetLevelNumber());
-
-        UpdateHealth();
     }
 
     /// <summary>
