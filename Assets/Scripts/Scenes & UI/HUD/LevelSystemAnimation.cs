@@ -35,6 +35,8 @@ public class LevelSystemAnimation
                 UpdateAddExperience();
             }
         }
+
+        //Debug.Log("Level: " + level + "\n" + "Exp: " + experience);
     }
 
     /// <summary>
@@ -116,8 +118,10 @@ public class LevelSystemAnimation
     private void AddExperience()
     {
         experience++;
-        if (experience >= levelSystem.GetExperienceToNextLevel(level))
+        while (experience >= levelSystem.GetExperienceToNextLevel(level))
         {
+            // enough experience to level up
+
             level++;
             experience = 0;
             if (OnLevelChanged != null) OnLevelChanged(this, EventArgs.Empty);
@@ -137,16 +141,6 @@ public class LevelSystemAnimation
     /// </summary>
 
     public int GetExperience() { return experience; }
-
-    /// <summary>
-    /// Returns the experience needed for the next level.
-    /// </summary>
-    /// <param name="levelIndex">the index of the current level</param>
-
-    public int GetExperienceToNextLevel(int levelIndex)
-    {
-        return levelSystem.GetExperienceToNextLevel(levelIndex) * 10;
-    }
 
     /// <summary>
     /// Returns the percentage until next level is reached.

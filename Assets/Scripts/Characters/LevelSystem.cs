@@ -14,7 +14,6 @@ public class LevelSystem
 
     int level;                          // the current level of this character
     int experience;                     // the amount of experience gained already
-    int experienceToNextLvl;            // the amount of experience needed to reach next level
 
     int baseExp = 100;                  // the base amount of xp needed for the next level
 
@@ -26,7 +25,6 @@ public class LevelSystem
     {
         level = levelNew;
         experience = experienceNew;
-        experienceToNextLvl = baseExp;
     }
 
     /// <summary>
@@ -42,7 +40,7 @@ public class LevelSystem
             // enough experience to level up
 
             level++;
-            experience -= GetExperienceToNextLevel(level);
+            experience -= GetExperienceToNextLevel(level - 1);
             if (OnLevelChanged != null) OnLevelChanged(this, EventArgs.Empty);
         }
 
@@ -68,7 +66,7 @@ public class LevelSystem
 
     public int GetExperienceToNextLevel(int levelIndex)
     {
-        return experienceToNextLvl * 10;
+        return levelIndex * 10;
     }
 
     /// <summary>

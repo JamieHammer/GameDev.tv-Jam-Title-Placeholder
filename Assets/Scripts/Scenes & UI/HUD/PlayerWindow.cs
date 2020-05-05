@@ -157,9 +157,6 @@ public class PlayerWindow : MonoBehaviour
     {
         SetExperienceBarSize(levelSystemAnimation.GetExperienceNormalised());
         SetLevelNumber(levelSystemAnimation.GetLevelNumber());
-
-        Debug.Log(levelSystemAnimation.GetExperienceNormalised());
-        Debug.Log(levelSystemAnimation.GetLevelNumber());
     }
 
     /// <summary>
@@ -179,7 +176,7 @@ public class PlayerWindow : MonoBehaviour
 
     void SetLevelNumber(int levelNumber)
     {
-        levelText.text = "Lvl " + (levelNumber + 1);
+        levelText.text = "Lvl " + (levelNumber);
     }
 
     /// <summary>
@@ -208,6 +205,8 @@ public class PlayerWindow : MonoBehaviour
     {
         // level changed, update text
         SetLevelNumber(levelSystemAnimation.GetLevelNumber());
+
+        UpdateHealth();
     }
 
     /// <summary>

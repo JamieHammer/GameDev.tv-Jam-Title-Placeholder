@@ -21,15 +21,18 @@ public class Player : CharacterStats
 
     #endregion
 
-    [SerializeField] private PlayerWindow playerWindow;
+    PlayerWindow playerWindow;                  // reference to the player HUD window
+    LevelSystem levelSystem;                    // reference to the level system of this player
 
-    LevelSystem levelSystem;            // reference to the level system of this player
-    Transform playerTransform;          // reference to the player transform
+    Transform playerTransform;                  // reference to the player transform
+    CharacterController2D characterController;  // reference to the character controller component on the player
 
     // Start is called before the first frame update
     void Start()
     {
         playerTransform = GetComponent<Transform>();
+        characterController = GetComponent<CharacterController2D>();
+        playerWindow = PlayerWindow.instance;
 
         EquipmentManager.instance.onEquipmentChanged += OnEquipmentChanged;
     }
@@ -56,11 +59,13 @@ public class Player : CharacterStats
 
     public void AddExperience(int amount)
     {
-        Debug.Log("Added " + amount + " XP");
-        Debug.Log("Experience: " + levelSystem.GetExperience());
-        Debug.Log("Normalised: " + levelSystem.GetExperienceNormalised());
+        Debug.Log(levelSystem.GetExperience());
 
         levelSystem.AddExperience(amount);
+        playerWindow.SetExperience();
+
+        Debug.Log("add: " + amount);
+        Debug.Log(levelSystem.GetExperience());
     }
 
     /// <summary>
@@ -69,7 +74,12 @@ public class Player : CharacterStats
 
     public void NewPlayer()
     {
-        levelSystem = new LevelSystem(0, 0);
+        if (playerWindow == null)
+        {
+            playerWindow = PlayerWindow.instance;
+        }
+
+        levelSystem = new LevelSystem(1, 0);
 
         LoadCurrentHealth(maxHealth);
 
@@ -142,8 +152,27 @@ public class Player : CharacterStats
         }
     }
 
+    // Debug
+
+    public void TakePlayerDamage(int damage)
+    {
+
+
+        bool isDead = TakeDamage(damage);
+        playerWindow.SetHP();
+
+        Debug.Log("Player has taken " + damage + " in damage" + "\n" +
+            "Remaining health: " + currentHealth);
+
+        if (isDead)
+        {
+            //characterController.Die();
+            Debug.Log("Showing death animation.");
+        }
+    }
+
     public void UpdateUI()
     {
-        playerWindow.SetPlayer();
+        playerWindow.SetPlayer();        
     }
 }
