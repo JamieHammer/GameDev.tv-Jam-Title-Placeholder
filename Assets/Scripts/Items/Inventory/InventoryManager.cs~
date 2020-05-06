@@ -20,9 +20,8 @@ public class InventoryManager : MonoBehaviour
     public int space = 16;                              // the limited space of a list
 
     public GameObject inventoryWindow;                  // reference to the inventory window
-    InventoryUI inventoryUI;                            // reference to the inventory UI
 
-    public InventoryType currentInventory;              // the current type of inventory selected
+    InventoryType currentInventory;                     // the current type of inventory selected
 
     private void Awake()
     {
@@ -34,8 +33,6 @@ public class InventoryManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
-        inventoryUI = inventoryWindow.GetComponent<InventoryUI>();
     }
 
     /// <summary>
@@ -44,8 +41,6 @@ public class InventoryManager : MonoBehaviour
 
     public void ShowEquipment()
     {
-        Debug.Log("Show equipment");
-
         currentInventory = InventoryType.Equipment;
         ShowInventory();
     }
@@ -56,8 +51,6 @@ public class InventoryManager : MonoBehaviour
 
     public void ShowUsables()
     {
-        Debug.Log("Show usable items");
-
         currentInventory = InventoryType.Usable;
         ShowInventory();
     }
@@ -68,8 +61,6 @@ public class InventoryManager : MonoBehaviour
 
     public void ShowQuestItems()
     {
-        Debug.Log("Show quest items");
-
         currentInventory = InventoryType.Quest;
         ShowInventory();
     }
@@ -81,7 +72,6 @@ public class InventoryManager : MonoBehaviour
     void ShowInventory()
     {
         inventoryWindow.SetActive(true);
-        inventoryUI.UpdateUI();
     }
 
     /// <summary>

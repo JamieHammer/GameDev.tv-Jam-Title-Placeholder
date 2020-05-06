@@ -24,6 +24,7 @@ public class Player : CharacterStats
     PlayerWindow playerWindow;                  // reference to the player HUD window
     LevelSystem levelSystem;                    // reference to the level system of this player
     HealthSystem healthSystem;                  // reference to the health system of this player
+    Interactable interactable;                  // reference to the item or character that is interactable
 
     Transform playerTransform;                  // reference to the player transform
     CharacterController2D characterController;  // reference to the character controller component on the player
@@ -36,6 +37,14 @@ public class Player : CharacterStats
         playerWindow = PlayerWindow.instance;
 
         EquipmentManager.instance.onEquipmentChanged += OnEquipmentChanged;
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            Interact();
+        }
     }
 
     void OnEquipmentChanged(Equipment newItem, Equipment oldItem)
@@ -193,5 +202,45 @@ public class Player : CharacterStats
     public void UpdateUI()
     {
         playerWindow.SetPlayer();        
+    }
+
+    /// <summary>
+    /// Makes the player able to interact with interactables.
+    /// </summary>
+
+    public void Interact()
+    {
+        if (interactable != null)
+        {
+            interactable.Interact();
+        }
+    }
+
+    /// <summary>
+    /// Handles trigger events for interactables.
+    /// </summary>
+
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Interactable")
+        {
+            interactable = collision.GetComponent<Interactable>();
+        }
+    }
+
+    /// <summary>
+    /// Handles trigger events for interactables.
+    /// </summary>
+
+    public void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "Interactable")
+        {
+            if (interactable != null)
+            {
+                interactable.StopInteract();
+                interactable = null;
+            }
+        }
     }
 }

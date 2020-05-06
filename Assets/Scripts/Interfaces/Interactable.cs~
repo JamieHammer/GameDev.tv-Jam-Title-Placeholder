@@ -1,0 +1,28 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+/// <summary>
+/// An interface for making something interactable.
+/// </summary>
+
+public class Interactable
+{
+    /// <summary>
+    /// 
+    /// </summary>
+
+    void Interact()
+    {
+
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+
+    void StopInteract()
+    {
+
+    }
+}
