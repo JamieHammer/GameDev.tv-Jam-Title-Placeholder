@@ -7,19 +7,19 @@ using UnityEngine;
 /// </summary>
 
 [CreateAssetMenu(fileName = "New Item", menuName = "Inventory/Item")]
-public class Item : ScriptableObject
+public abstract class Item : ScriptableObject
 {
-    [Header("Inventory Type")]
-
-    [SerializeField] InventoryType inventoryType;       // the type of this inventory item
-
-    [Header("Name")]
+    [Header("Info")]
 
     [SerializeField] string itemName;                   // the name of this inventory item
 
-    [Header("Icon")]
+    [SerializeField] InventoryType inventoryType;       // the type of this inventory item
 
     [SerializeField] Sprite itemIcon;                   // the icon of this inventory item
+
+    [SerializeField] int stackSize;                     // amount of items that can be stacked
+
+    [SerializeField] InventorySlot slot;                // reference to this item's inventory slot
 
     /// <summary>
     /// Returns the inventory type of this item.
@@ -46,6 +46,25 @@ public class Item : ScriptableObject
     public Sprite GetIcon()
     {
         return itemIcon;
+    }
+
+    /// <summary>
+    /// Returns the number of this item, that can be stacked in a slot.
+    /// </summary>
+    /// <returns></returns>
+
+    public int GetStackSize()
+    {
+        return stackSize;
+    }
+
+    /// <summary>
+    /// Returns the item's slot, also possible to set it on pickup.
+    /// </summary>
+
+    public InventorySlot Slot
+    {
+        get { return slot; } set { slot = value; }
     }
 
     /// <summary>
