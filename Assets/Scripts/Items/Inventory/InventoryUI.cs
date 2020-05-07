@@ -22,8 +22,6 @@ public class InventoryUI : MonoBehaviour
         inventory.onItemChangedCallback += UpdateUI;
 
         inventorySlots = slotParent.GetComponentsInChildren<InventorySlot>();
-
-        UpdateUI();
     }
 
     /// <summary>
@@ -49,7 +47,7 @@ public class InventoryUI : MonoBehaviour
                 break;
 
             case InventoryType.Quest:
-                UpdateTitle("Quest item");
+                UpdateTitle("Quest items");
                 PopulateSlots(inventory.questItems);
                 break;
         }

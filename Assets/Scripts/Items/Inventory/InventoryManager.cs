@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 /// <summary>
 /// Responsible for the inventory system.
@@ -24,6 +25,8 @@ public class InventoryManager : MonoBehaviour
 
     public InventoryType currentInventory;              // the current type of inventory selected
 
+    public TextMeshProUGUI titleText;                   // the text component of the title
+
     private void Awake()
     {
         if (instance == null)
@@ -39,39 +42,73 @@ public class InventoryManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Responsible for showing equipment.
+    /// To show the title of the hovered inventory bag, while hovered.
+    /// </summary>
+    /// <param name="newTitle">The new title to show</param>
+
+    public void UpdateTitle(string newTitle)
+    {
+        titleText.text = newTitle;
+    }
+
+    /// <summary>
+    /// To revert back to the title after hover has ended.
     /// </summary>
 
-    public void ShowEquipment()
+    public void RevertTitle()
     {
-        Debug.Log("Show equipment");
-
-        currentInventory = InventoryType.Equipment;
-        ShowInventory();
+        titleText.text = "Inventory";
     }
 
     /// <summary>
     /// Responsible for showing equipment.
     /// </summary>
 
-    public void ShowUsables()
+    public void ToggleEquipment()
     {
-        Debug.Log("Show usable items");
-
-        currentInventory = InventoryType.Usable;
-        ShowInventory();
+        if (currentInventory != InventoryType.Equipment)
+        {
+            currentInventory = InventoryType.Equipment;
+            ShowInventory();
+        }
+        else
+        {
+            HideInventory();
+        }
     }
 
     /// <summary>
     /// Responsible for showing equipment.
     /// </summary>
 
-    public void ShowQuestItems()
+    public void ToggleUsables()
     {
-        Debug.Log("Show quest items");
+        if (currentInventory != InventoryType.Usable)
+        {
+            currentInventory = InventoryType.Usable;
+            ShowInventory();
+        }
+        else
+        {
+            HideInventory();
+        }
+    }
 
-        currentInventory = InventoryType.Quest;
-        ShowInventory();
+    /// <summary>
+    /// Responsible for showing equipment.
+    /// </summary>
+
+    public void ToggleQuestItems()
+    {
+        if (currentInventory != InventoryType.Quest)
+        {
+            currentInventory = InventoryType.Quest;
+            ShowInventory();
+        }
+        else
+        {
+            HideInventory();
+        }
     }
 
     /// <summary>
