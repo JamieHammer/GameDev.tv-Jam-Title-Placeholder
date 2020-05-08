@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 /// <summary>
 /// Responsible for the inventory slot the script is attached to.
 /// </summary>
 
-public class InventorySlot : MonoBehaviour
+public class InventorySlot : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] Image icon;            // reference to the icon image component of this slot
     [SerializeField] GameObject removeBtn;  // reference to the remove item button of this slot
@@ -38,7 +39,7 @@ public class InventorySlot : MonoBehaviour
         icon.sprite = item.GetIcon();
         icon.enabled = true;
         removeBtn.SetActive(true);
-
+        item.Slot = this;
         return true;
     }
 
@@ -46,13 +47,36 @@ public class InventorySlot : MonoBehaviour
     /// Responsible for clearing this inventory slot.
     /// </summary>
 
-    public void ClearSlot()
+    public void RemoveItem(Item item)
     {
-        //item = null;
+        if (!IsEmpty)
+        {
+            items.Pop();
+        }
 
-        icon.sprite = null;
-        icon.enabled = false;
-        removeBtn.SetActive(false);
+        if (IsEmpty)
+        {
+            icon.sprite = null;
+            icon.enabled = false;
+            removeBtn.SetActive(false);
+        }
+    }
+
+    /// <summary>
+    /// To peek at the top item of the stack, returns null if stack is empty.
+    /// </summary>
+
+    public Item item
+    {
+        get
+        {
+            if (!IsEmpty)
+            {
+                return items.Peek();
+            }
+
+            return null;
+        }
     }
 
     /// <summary>
@@ -61,7 +85,7 @@ public class InventorySlot : MonoBehaviour
 
     public void OnRemoveButton()
     {
-        //InventoryManager.instance.Remove(item);
+        InventoryManager.instance.Remove(item);
     }
 
     /// <summary>
@@ -70,9 +94,26 @@ public class InventorySlot : MonoBehaviour
 
     public void UseItem()
     {
-        //if (item != null)
-        //{
-            //item.Use();
-        //}
+        if (item != null)
+        {
+            item.Use();
+            RemoveItem(item);
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        // if right mouse click use item
+
+        if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            UseItem();
+        }
+
+        // todo if left mouse click
     }
 }

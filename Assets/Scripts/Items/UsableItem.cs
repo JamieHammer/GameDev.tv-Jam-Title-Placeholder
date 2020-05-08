@@ -9,7 +9,17 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Usable Item", menuName = "Inventory/Usable Item ")]
 public class UsableItem : Item
 {
-    Player  player;
+    [Space]
+
+    [Header("Usable Item Type")]
+
+    [SerializeField] UsableItemType usableItemType;     // the type of usable this item is
+
+    [Header("Modifier")]
+
+    [SerializeField] int amount;                        // the amount to boost
+
+    Player player;
 
     /// <summary>
     /// Overrides the Item use function, to equip item.
@@ -19,13 +29,48 @@ public class UsableItem : Item
     {
         base.Use();
 
-        player = StoryManager.instance.GetPlayer();
+        if (player == null)
+        {
+            player = Player.instance;
+        }
 
-        // todo if usable item is of type heal todo create usable item types
-        // heal the amount instead of the hardcoded 5 below
+        switch (usableItemType)
+        {
+            case UsableItemType.HealthBoost:
+                BoostHealth();
+                break;
 
-        player.Heal(5);
+            case UsableItemType.ExperienceBoost:
+                BoostExperience();
+                break;
+        }
 
         RemoveFromInventory();
+    }
+
+    /// <summary>
+    /// Heals the player by the amount of the item.
+    /// </summary>
+
+    void BoostHealth()
+    {
+        if (player.healthSystemAnimation.GetCurrentHealth() <
+            player.healthSystemAnimation.GetMaxHealth())
+        {
+            player.Heal(amount);
+        }
+        else
+        {
+            Debug.Log("Player is already at full health");
+        }
+    }
+
+    /// <summary>
+    /// Heals the player by the amount of the item.
+    /// </summary>
+
+    void BoostExperience()
+    {
+        player.AddExperience(amount);
     }
 }

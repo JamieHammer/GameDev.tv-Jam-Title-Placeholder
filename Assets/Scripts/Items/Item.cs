@@ -74,6 +74,8 @@ public abstract class Item : ScriptableObject
     public virtual void Use()
     {
         Debug.Log("Using " + name);
+
+        RemoveFromInventory();
     }
 
     /// <summary>
@@ -82,6 +84,9 @@ public abstract class Item : ScriptableObject
 
     public void RemoveFromInventory()
     {
-        InventoryManager.instance.Remove(this);
+        if (slot != null)
+        {
+            slot.RemoveItem(this);
+        }
     }
 }

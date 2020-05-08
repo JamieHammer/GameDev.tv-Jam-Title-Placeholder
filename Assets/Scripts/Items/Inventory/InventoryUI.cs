@@ -39,7 +39,7 @@ public class InventoryUI : MonoBehaviour
 
     private void OnEnable()
     {
-        Debug.Log("Hello there");
+        UpdateUI();
     }
 
     /// <summary>

@@ -58,6 +58,15 @@ public enum InventoryType
 
 public enum EquipmentType
 {
-    PrimaryWeapon, SecondaryWeapon, Armour, Shield
+    Weapon, Armour, Shield
+}
+
+/// <summary>
+/// To clarify which type of usable the item is.
+/// </summary>
+
+public enum UsableItemType
+{
+    HealthBoost, ExperienceBoost
 }
 

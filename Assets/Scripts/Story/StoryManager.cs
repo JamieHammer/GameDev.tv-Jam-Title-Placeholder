@@ -125,7 +125,7 @@ public class StoryManager : MonoBehaviour
     {
         foreach (Item reward in currentState.GetRewards())
         {
-            InventoryManager.instance.Add(reward);
+            InventoryManager.instance.AddItem(reward);
 
             Debug.Log("player should have received: " + reward);
         }
@@ -137,7 +137,7 @@ public class StoryManager : MonoBehaviour
         {
             if (currentState.GetItem() != null)
             {
-                InventoryManager.instance.Add(currentState.GetItem());
+                InventoryManager.instance.AddItem(currentState.GetItem());
 
                 Debug.Log("player should have received: " + currentState.GetItem());
             }

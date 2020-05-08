@@ -288,7 +288,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 635006423}
   m_HandleRect: {fileID: 0}
@@ -7433,7 +7433,7 @@ MonoBehaviour:
   inventoryWindow: {fileID: 1163102789}
   currentInventory: 0
   titleText: {fileID: 369121311}
-  testItem: {fileID: 11400000, guid: 35712bea4ae1d4c21a7e4487831835d4, type: 2}
+  testItem: {fileID: 11400000, guid: ebea69f63e82949a3bcfa32411c663c3, type: 2}
 --- !u!114 &652557783
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11210,7 +11210,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 1119683643}
   m_HandleRect: {fileID: 0}
@@ -15845,6 +15845,24 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1623563404}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1634358409 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 254395579, guid: 3e23dd32d1ac74269a7ef721940da8da,
+    type: 3}
+  m_PrefabInstance: {fileID: 723993233135038254}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1634358411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1634358409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d287c4b2d751945eab50291e20bd6c26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1645746190
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21100,6 +21118,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 254395579, guid: 3e23dd32d1ac74269a7ef721940da8da, type: 3}
+      propertyPath: m_Name
+      value: WeaponHandler
+      objectReference: {fileID: 0}
     - target: {fileID: 2202721127420522104, guid: 3e23dd32d1ac74269a7ef721940da8da,
         type: 3}
       propertyPath: m_Name

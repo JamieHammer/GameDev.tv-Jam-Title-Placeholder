@@ -45,7 +45,7 @@ public class InventoryManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.K))
         {
-            Add(testItem);
+            AddItem(testItem);
         }
     }
 
@@ -149,7 +149,7 @@ public class InventoryManager : MonoBehaviour
     /// </summary>
     /// <param name="item">item to add to inventory</param>
 
-    public void Add(Item item)
+    public void AddItem(Item item)
     {
         switch (item.GetInventoryType())
         {
@@ -181,6 +181,11 @@ public class InventoryManager : MonoBehaviour
         {
             Debug.Log("Something went wrong, " + item + " was not put in " + bag);
         }
+
+        if (onItemChangedCallback != null)
+        {
+            onItemChangedCallback.Invoke();
+        }
     }
 
     /// <summary>
@@ -190,20 +195,18 @@ public class InventoryManager : MonoBehaviour
 
     public void Remove(Item item)
     {
-        /*
-
         switch (item.GetInventoryType())
         {
             case InventoryType.Equipment:
-                equipment.Remove(item);
+                //equipment.Remove(item);
                 break;
 
             case InventoryType.Usable:
-                usableItems.Remove(item);
+                //usableItems.Remove(item);
                 break;
 
             case InventoryType.Quest:
-                questItems.Remove(item);
+                //questItems.Remove(item);
                 break;
         }
 
@@ -211,7 +214,5 @@ public class InventoryManager : MonoBehaviour
         {
             onItemChangedCallback.Invoke();
         }
-
-        */
     }
 }
