@@ -9,19 +9,62 @@ using TMPro;
 
 public class InventoryUI : MonoBehaviour
 {
-    public Transform slotParent;                // the parent transform of the inventory slots
+    public static InventoryUI instance;         // singleton
+
+    public Transform equipmentParent;           // the parent transform of the equipment slots
+    public Transform usableItemsParent;         // the parent transform of the usable item slots
+    public Transform questItemsParent;          // the parent transform of the quest item slots
+
     public TextMeshProUGUI titleText;           // the title text component
 
     InventoryManager inventory;                 // reference to the inventory manager
 
-    InventorySlot[] inventorySlots;             // an array of inventory slots
+    public List<InventorySlot> equipmentSlots = new List<InventorySlot>();      // a list of equipment slots
+    public List<InventorySlot> usableItemSlots = new List<InventorySlot>();  // a list of equipment slots
+    public List<InventorySlot> questItemSlots = new List<InventorySlot>();      // a list of equipment slots
 
-    void Start()
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
+        SetupSlots();
+    }
+
+    private void OnEnable()
+    {
+        Debug.Log("Hello there");
+    }
+
+    /// <summary>
+    /// Responsible for setting up the slots before deactivating itself.
+    /// </summary>
+
+    private void SetupSlots()
     {
         inventory = InventoryManager.instance;
         inventory.onItemChangedCallback += UpdateUI;
 
-        inventorySlots = slotParent.GetComponentsInChildren<InventorySlot>();
+        SetupBag(equipmentParent, equipmentSlots);
+        SetupBag(usableItemsParent, usableItemSlots);
+        SetupBag(questItemsParent, questItemSlots);
+
+        gameObject.SetActive(false);
+    }
+
+    void SetupBag(Transform parent, List<InventorySlot> slots)
+    {
+        for (int i = 0; i < parent.childCount; i++)
+        {
+            InventorySlot slot = parent.GetChild(i).GetComponent<InventorySlot>();
+            slots.Add(slot);
+        }
     }
 
     /// <summary>
@@ -30,6 +73,8 @@ public class InventoryUI : MonoBehaviour
 
     public void UpdateUI()
     {
+        HideAll();
+
         switch(inventory.currentInventory)
         {
             case InventoryType.None:
@@ -38,19 +83,33 @@ public class InventoryUI : MonoBehaviour
 
             case InventoryType.Equipment:
                 UpdateTitle("Equipment");
-                PopulateSlots(inventory.equipment);
+                equipmentParent.gameObject.SetActive(true);
+                //PopulateSlots(inventory.equipment);
                 break;
 
             case InventoryType.Usable:
                 UpdateTitle("Usables");
-                PopulateSlots(inventory.usableItems);
+                usableItemsParent.gameObject.SetActive(true);
+                //PopulateSlots(inventory.usableItems);
                 break;
 
             case InventoryType.Quest:
                 UpdateTitle("Quest items");
-                PopulateSlots(inventory.questItems);
+                questItemsParent.gameObject.SetActive(true);
+                //PopulateSlots(inventory.questItems);
                 break;
         }
+    }
+
+    /// <summary>
+    /// Hides all of the inventory slots.
+    /// </summary>
+
+    void HideAll()
+    {
+        equipmentParent.gameObject.SetActive(false);
+        usableItemsParent.gameObject.SetActive(false);
+        questItemsParent.gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -70,6 +129,8 @@ public class InventoryUI : MonoBehaviour
 
     void PopulateSlots(List<Item> items)
     {
+        /*
+
         for (int i = 0; i < inventorySlots.Length; i++)
         {
             if (i < inventory.questItems.Count)
@@ -81,5 +142,6 @@ public class InventoryUI : MonoBehaviour
                 inventorySlots[i].ClearSlot();
             }
         }
+        */
     }
 }

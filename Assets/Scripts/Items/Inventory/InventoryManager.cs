@@ -14,11 +14,9 @@ public class InventoryManager : MonoBehaviour
     public delegate void OnItemChanged();
     public OnItemChanged onItemChangedCallback;
 
-    public List<Item> equipment = new List<Item>();     // a list of inventory equipment
-    public List<Item> usableItems = new List<Item>();   // a list of usable items
-    public List<Item> questItems = new List<Item>();    // a list of quest items
-
-    public int space = 16;                              // the limited space of a list
+    public Bag equipmentBag;                            // a bag for equipment
+    public Bag usableItemsBag;                          // a bag for usable items
+    public Bag questItemsBag;                           // a bag for quest items
 
     public GameObject inventoryWindow;                  // reference to the inventory window
     InventoryUI inventoryUI;                            // reference to the inventory UI
@@ -26,6 +24,8 @@ public class InventoryManager : MonoBehaviour
     public InventoryType currentInventory;              // the current type of inventory selected
 
     public TextMeshProUGUI titleText;                   // the text component of the title
+
+    public Item testItem;
 
     private void Awake()
     {
@@ -38,7 +38,15 @@ public class InventoryManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        inventoryUI = inventoryWindow.GetComponent<InventoryUI>();
+        inventoryUI = InventoryUI.instance;
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            Add(testItem);
+        }
     }
 
     /// <summary>
@@ -117,6 +125,11 @@ public class InventoryManager : MonoBehaviour
 
     void ShowInventory()
     {
+        if (inventoryUI == null)
+        {
+            inventoryUI = InventoryUI.instance;
+        }
+
         inventoryWindow.SetActive(true);
         inventoryUI.UpdateUI();
     }
@@ -141,40 +154,32 @@ public class InventoryManager : MonoBehaviour
         switch (item.GetInventoryType())
         {
             case InventoryType.Equipment:
-                if (equipment.Count < space)
-                {
-                    equipment.Add(item);
-
-                    if (onItemChangedCallback != null)
-                    {
-                        onItemChangedCallback.Invoke();
-                    }
-                }
+                AddToBag(item, equipmentBag);
                 break;
 
             case InventoryType.Usable:
-                if (usableItems.Count < space)
-                {
-                    usableItems.Add(item);
-
-                    if (onItemChangedCallback != null)
-                    {
-                        onItemChangedCallback.Invoke();
-                    }
-                }
+                AddToBag(item, usableItemsBag);
                 break;
 
             case InventoryType.Quest:
-                if (questItems.Count < space)
-                {
-                    questItems.Add(item);
-
-                    if (onItemChangedCallback != null)
-                    {
-                        onItemChangedCallback.Invoke();
-                    }
-                }
+                AddToBag(item, questItemsBag);
                 break;
+        }
+    }
+
+    /// <summary>
+    /// Inserts the item in the proper bag.
+    /// </summary>
+
+    void AddToBag(Item item, Bag bag)
+    {
+        if (bag.AddItem(item))
+        {
+            Debug.Log(item + " was added in " + bag);
+        }
+        else
+        {
+            Debug.Log("Something went wrong, " + item + " was not put in " + bag);
         }
     }
 
@@ -185,6 +190,8 @@ public class InventoryManager : MonoBehaviour
 
     public void Remove(Item item)
     {
+        /*
+
         switch (item.GetInventoryType())
         {
             case InventoryType.Equipment:
@@ -204,5 +211,7 @@ public class InventoryManager : MonoBehaviour
         {
             onItemChangedCallback.Invoke();
         }
+
+        */
     }
 }

@@ -1,0 +1,44 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Bag : MonoBehaviour
+{
+    [SerializeField] int space = 16;        // the amount of slots in this bag
+
+    List<InventorySlot> slots = new List<InventorySlot>();
+
+    private void Awake()
+    {
+        AddSlots(space);
+    }
+
+    void AddSlots(int bagSpace)
+    {
+        for (int i = 0; i < bagSpace; i++)
+        {
+            
+        }
+    }
+
+    /// <summary>
+    /// Responsible for adding the item to the bag.
+    /// </summary>
+    /// <param name="item">the item to add if available space</param>
+    /// <returns>whether or not the item was succesfully added to a slot in the bag</returns>
+
+    public bool AddItem(Item item)
+    {
+        foreach (var slot in slots)
+        {
+            if (slot.IsEmpty)
+            {
+                slot.AddItem(item);
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+}
