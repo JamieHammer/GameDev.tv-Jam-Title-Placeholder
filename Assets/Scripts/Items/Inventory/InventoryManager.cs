@@ -25,7 +25,8 @@ public class InventoryManager : MonoBehaviour
 
     public TextMeshProUGUI titleText;                   // the text component of the title
 
-    public Item testItem;
+    public Item[] weapons;
+    public Item[] usables;
 
     private void Awake()
     {
@@ -43,10 +44,18 @@ public class InventoryManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.K))
+        #region Debug
+
+        if (Input.GetKeyDown(KeyCode.Z))
         {
-            AddItem(testItem);
+            AddItem(weapons[Random.Range(0, weapons.Length - 1)]);
         }
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            AddItem(usables[Random.Range(0, usables.Length - 1)]);
+        }
+
+        #endregion
     }
 
     /// <summary>
@@ -151,6 +160,37 @@ public class InventoryManager : MonoBehaviour
 
     public void AddItem(Item item)
     {
+        // if item is stackable try to stack it first
+
+        if (item.GetStackSize() > 1)
+        {
+            switch (item.GetInventoryType())
+            {
+                case InventoryType.Equipment:
+                    if (PlaceInStack(item, equipmentBag))
+                    {
+                        return;
+                    }
+                    break;
+
+                case InventoryType.Usable:
+                    if (PlaceInStack(item, usableItemsBag))
+                    {
+                        return;
+                    }
+                    break;
+
+                case InventoryType.Quest:
+                    if (PlaceInStack(item, questItemsBag))
+                    {
+                        return;
+                    }
+                    break;
+            }
+        }
+
+        // else try to add the item to an empty slot of the bag
+
         switch (item.GetInventoryType())
         {
             case InventoryType.Equipment:
@@ -165,27 +205,48 @@ public class InventoryManager : MonoBehaviour
                 AddToBag(item, questItemsBag);
                 break;
         }
+
+        if (onItemChangedCallback != null)
+        {
+            onItemChangedCallback.Invoke();
+        }
     }
 
     /// <summary>
-    /// Inserts the item in the proper bag.
+    /// Responsible for trying to put an item into an empty slot in the bag.
     /// </summary>
+    /// <param name="item">The item to check</param>
+    /// <param name="bag">The bag to check</param>
 
     void AddToBag(Item item, Bag bag)
     {
         if (bag.AddItem(item))
         {
             Debug.Log(item + " was added in " + bag);
-        }
-        else
-        {
-            Debug.Log("Something went wrong, " + item + " was not put in " + bag);
+            return;
         }
 
-        if (onItemChangedCallback != null)
+        Debug.Log("Something went wrong, " + item + " was not put in " + bag);
+    }
+
+    /// <summary>
+    /// Responsible for trying to stack an item.
+    /// </summary>
+    /// <param name="item">The item to check</param>
+    /// <param name="bag">The bag to check</param>
+    /// <returns>whether or not the stack attempt was sucesful</returns>
+
+    bool PlaceInStack(Item item, Bag bag)
+    {
+        foreach (var slot in bag.slots)
         {
-            onItemChangedCallback.Invoke();
+            if (slot.StackItem(item))
+            {
+                return true;
+            }
         }
+
+        return false;
     }
 
     /// <summary>
@@ -198,15 +259,15 @@ public class InventoryManager : MonoBehaviour
         switch (item.GetInventoryType())
         {
             case InventoryType.Equipment:
-                //equipment.Remove(item);
+                equipmentBag.RemoveItem(item);
                 break;
 
             case InventoryType.Usable:
-                //usableItems.Remove(item);
+                usableItemsBag.RemoveItem(item);
                 break;
 
             case InventoryType.Quest:
-                //questItems.Remove(item);
+                questItemsBag.RemoveItem(item);
                 break;
         }
 

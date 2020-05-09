@@ -55,4 +55,10 @@ public class Bag : MonoBehaviour
 
         return false;
     }
+
+    public void RemoveItem(Item item)
+    {
+        // todo remove from bag
+        Debug.Log("Should remove " + item);
+    }
 }

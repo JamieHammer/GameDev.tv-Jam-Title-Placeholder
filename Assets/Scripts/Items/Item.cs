@@ -31,7 +31,7 @@ public abstract class Item : ScriptableObject
     }
 
     /// <summary>
-    /// Returns the inventory type of this item.
+    /// Returns the name of this item.
     /// </summary>
 
     public string GetName()
@@ -40,7 +40,7 @@ public abstract class Item : ScriptableObject
     }
 
     /// <summary>
-    /// Returns the inventory type of this item.
+    /// Returns the icon of this item.
     /// </summary>
 
     public Sprite GetIcon()
@@ -74,8 +74,6 @@ public abstract class Item : ScriptableObject
     public virtual void Use()
     {
         Debug.Log("Using " + name);
-
-        RemoveFromInventory();
     }
 
     /// <summary>

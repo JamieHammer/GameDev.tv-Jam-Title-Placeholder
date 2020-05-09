@@ -84,19 +84,16 @@ public class InventoryUI : MonoBehaviour
             case InventoryType.Equipment:
                 UpdateTitle("Equipment");
                 equipmentParent.gameObject.SetActive(true);
-                //PopulateSlots(inventory.equipment);
                 break;
 
             case InventoryType.Usable:
                 UpdateTitle("Usables");
                 usableItemsParent.gameObject.SetActive(true);
-                //PopulateSlots(inventory.usableItems);
                 break;
 
             case InventoryType.Quest:
                 UpdateTitle("Quest items");
                 questItemsParent.gameObject.SetActive(true);
-                //PopulateSlots(inventory.questItems);
                 break;
         }
     }
@@ -120,28 +117,5 @@ public class InventoryUI : MonoBehaviour
     void UpdateTitle(string title)
     {
         titleText.text = title;
-    }
-
-    /// <summary>
-    /// Responsible for populating theinventory slots.
-    /// </summary>
-    /// <param name="items">a list of items to populate the slots with</param>
-
-    void PopulateSlots(List<Item> items)
-    {
-        /*
-
-        for (int i = 0; i < inventorySlots.Length; i++)
-        {
-            if (i < inventory.questItems.Count)
-            {
-                inventorySlots[i].AddItem(items[i]);
-            }
-            else
-            {
-                inventorySlots[i].ClearSlot();
-            }
-        }
-        */
     }
 }

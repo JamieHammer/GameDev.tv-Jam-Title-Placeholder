@@ -64,6 +64,8 @@ public class EquipmentManager : MonoBehaviour
         }
 
         currentEquipment[slotIndex] = newItem;
+
+        // todo if the equipment isn't removed, use RemoveFromInventory();
     }
 
     /// <summary>

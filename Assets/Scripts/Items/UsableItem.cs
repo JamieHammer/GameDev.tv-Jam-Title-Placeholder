@@ -44,8 +44,6 @@ public class UsableItem : Item
                 BoostExperience();
                 break;
         }
-
-        RemoveFromInventory();
     }
 
     /// <summary>
@@ -58,6 +56,7 @@ public class UsableItem : Item
             player.healthSystemAnimation.GetMaxHealth())
         {
             player.Heal(amount);
+            RemoveFromInventory();
         }
         else
         {
@@ -72,5 +71,6 @@ public class UsableItem : Item
     void BoostExperience()
     {
         player.AddExperience(amount);
+        RemoveFromInventory();
     }
 }

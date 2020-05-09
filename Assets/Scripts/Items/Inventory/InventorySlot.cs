@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using TMPro;
 
 /// <summary>
 /// Responsible for the inventory slot the script is attached to.
@@ -12,6 +13,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] Image icon;            // reference to the icon image component of this slot
     [SerializeField] GameObject removeBtn;  // reference to the remove item button of this slot
+    [SerializeField] TextMeshProUGUI stackCount;    // reference to the stack count text component
 
     Stack<Item> items = new Stack<Item>();  // a stack of items in this slot
 
@@ -40,6 +42,8 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
         icon.enabled = true;
         removeBtn.SetActive(true);
         item.Slot = this;
+
+        UpdateSlot();
         return true;
     }
 
@@ -60,6 +64,8 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
             icon.enabled = false;
             removeBtn.SetActive(false);
         }
+
+        UpdateSlot();
     }
 
     /// <summary>
@@ -85,7 +91,11 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
 
     public void OnRemoveButton()
     {
+        // probably doesn't work anymore - todo reimplement
+
         InventoryManager.instance.Remove(item);
+
+        UpdateSlot();
     }
 
     /// <summary>
@@ -97,8 +107,10 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
         if (item != null)
         {
             item.Use();
-            RemoveItem(item);
+            //RemoveItem(item);
         }
+
+        UpdateSlot();
     }
 
     /// <summary>
@@ -114,6 +126,42 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
             UseItem();
         }
 
-        // todo if left mouse click
+        // todo if left mouse click show tooltip
+    }
+
+    /// <summary>
+    /// Responsible for trying to stack an item into this bag slot.
+    /// </summary>
+    /// <param name="item">the item to stack</param>
+    /// <returns>whether or not the stack was succesful</returns>
+
+    public bool StackItem(Item item)
+    {
+        if (!IsEmpty && item.GetName() == this.item.GetName() && items.Count < this.item.GetStackSize())
+        {
+            items.Push(item);
+            item.Slot = this;
+            UpdateSlot();
+            return true;
+        }
+
+        return false;
+    }
+
+    public void UpdateStackSize()
+    {
+        if (items.Count > 1)
+        {
+            stackCount.text = items.Count.ToString();
+        }
+        else
+        {
+            stackCount.text = "";
+        }
+    }
+
+    void UpdateSlot()
+    {
+        UpdateStackSize();
     }
 }
