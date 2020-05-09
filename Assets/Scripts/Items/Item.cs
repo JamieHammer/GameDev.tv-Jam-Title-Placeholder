@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 
 [CreateAssetMenu(fileName = "New Item", menuName = "Inventory/Item")]
-public abstract class Item : ScriptableObject
+public abstract class Item : ScriptableObject, Moveable
 {
     [Header("Info")]
 
@@ -65,6 +65,11 @@ public abstract class Item : ScriptableObject
     public InventorySlot Slot
     {
         get { return slot; } set { slot = value; }
+    }
+
+    public Sprite icon
+    {
+        get { return itemIcon; }
     }
 
     /// <summary>

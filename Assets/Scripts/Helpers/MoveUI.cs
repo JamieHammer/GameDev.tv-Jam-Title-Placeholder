@@ -1,0 +1,83 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+/// <summary>
+/// Makes it possible to move around UI elements, like dragging inventory items.
+/// </summary>
+
+public class MoveUI : MonoBehaviour
+{
+    #region Singleton
+
+    public static MoveUI instance;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    #endregion
+
+    public Moveable moveable;           // reference to the movable interface on an object
+
+    Image icon;                         // reference to the image component of the object to move
+
+    [SerializeField] Vector3 offset;    // an offset for the icon, so it isn't directly on the mouse position
+
+    private void Start()
+    {
+        icon = GetComponent<Image>();
+    }
+
+    private void Update()
+    {
+        icon.transform.position = Input.mousePosition + offset;
+    }
+
+    /// <summary>
+    /// Assigns the movable to move.
+    /// </summary>
+
+    public void TakeMovable(Moveable newMoveable)
+    {
+        moveable = newMoveable;
+        icon.sprite = moveable.icon;
+        icon.color = Color.white;
+    }
+
+    /// <summary>
+    /// Used to put the held item in a designated place.
+    /// </summary>
+    /// <returns>the held item</returns>
+
+    public Moveable Put()
+    {
+        Moveable tmp = moveable;
+
+        moveable = null;
+
+        icon.color = new Color(0, 0, 0, 0);
+
+        return tmp;
+    }
+
+    /// <summary>
+    /// Used to drop a held item.
+    /// </summary>
+
+    public void Drop()
+    {
+        moveable = null;
+
+        icon.color = new Color(0, 0, 0, 0);
+    }
+}

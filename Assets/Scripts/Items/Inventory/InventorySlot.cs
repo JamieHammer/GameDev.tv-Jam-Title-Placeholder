@@ -11,7 +11,8 @@ using TMPro;
 
 public class InventorySlot : MonoBehaviour, IPointerClickHandler
 {
-    [SerializeField] Image icon;            // reference to the icon image component of this slot
+    public Image icon;                      // reference to the icon image component of this slot
+
     [SerializeField] GameObject removeBtn;  // reference to the remove item button of this slot
     [SerializeField] TextMeshProUGUI stackCount;    // reference to the stack count text component
 
@@ -26,6 +27,23 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
         get
         {
             return items.Count == 0;
+        }
+    }
+
+    /// <summary>
+    /// Returns whether or not the slot is full.
+    /// </summary>
+
+    public bool IsFull
+    {
+        get
+        {
+            if (IsEmpty || items.Count < item.GetStackSize())
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 
@@ -114,19 +132,85 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
     }
 
     /// <summary>
-    /// 
+    /// Handles click events on this slot button.
     /// </summary>
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        // if right mouse click use item
+        // if right mouse click, use item
 
         if (eventData.button == PointerEventData.InputButton.Right)
         {
             UseItem();
         }
 
-        // todo if left mouse click show tooltip
+        // if left mouse click, enable move
+
+        if (eventData.button == PointerEventData.InputButton.Left)
+        {
+            // if we don't have anything to move
+
+            if (InventoryManager.instance.MovingSlot == null && !IsEmpty)
+            {
+                MoveUI.instance.TakeMovable(item as Moveable);
+                InventoryManager.instance.MovingSlot = this;
+            }
+            else if (InventoryManager.instance.MovingSlot != null)      // if we do have something to move
+            {
+                // if the same slot is clicked, item is to be put back
+
+                if (PutItemBack() || SwapItems(InventoryManager.instance.MovingSlot) ||
+                    AddItems(InventoryManager.instance.MovingSlot.items))
+                {
+                    MoveUI.instance.Drop();  
+                    InventoryManager.instance.MovingSlot = null;
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Returns whether or not the moved item should be put back.
+    /// </summary>
+
+    bool PutItemBack()
+    {
+        if (InventoryManager.instance.MovingSlot == this)
+        {
+            InventoryManager.instance.MovingSlot.icon.color = Color.white;
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Returns whether or not it was possible to swap the two item stacks.
+    /// </summary>
+    /// <param name="from">the first clicked slot</param>
+
+    bool SwapItems(InventorySlot from)
+    {
+        if (IsEmpty)
+        {
+            return false;
+        }
+
+        if (from.item.GetInventoryType() != item.GetInventoryType() ||
+            from.items.Count + items.Count > item.GetStackSize())
+        {
+            Stack<Item> tmpFrom = new Stack<Item>(from.items);
+
+            from.items.Clear();
+            from.AddItems(items);
+
+            items.Clear();
+            AddItems(tmpFrom);
+
+            return true;
+        }
+
+        return false;
     }
 
     /// <summary>
@@ -148,6 +232,38 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
         return false;
     }
 
+    /// <summary>
+    /// Responsible for trying to add the items to the slot.
+    /// </summary>
+    /// <param name="newItems">the stack of new items</param>
+    /// <returns></returns>
+
+    public bool AddItems(Stack<Item> newItems)
+    {
+        if (IsEmpty || newItems.Peek().GetInventoryType() == item.GetInventoryType())
+        {
+            int count = newItems.Count;
+
+            for (int i = 0; i < count; i++)
+            {
+                if (IsFull)
+                {
+                    return false;
+                }
+
+                AddItem(newItems.Pop());
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Responsible for updating the stack size.
+    /// </summary>
+
     public void UpdateStackSize()
     {
         if (items.Count > 1)
@@ -159,6 +275,10 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
             stackCount.text = "";
         }
     }
+
+    /// <summary>
+    /// Updates the slot whenever any changes are made to it.
+    /// </summary>
 
     void UpdateSlot()
     {

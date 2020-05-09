@@ -1,0 +1,34 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+/// <summary>
+/// Handles the logic of the action buttons.
+/// </summary>
+
+public class ActionButton : MonoBehaviour
+{
+    public ActionButtonType type;           // to set a button type
+
+    InventorySlot slot;                     // reference to the inventory slot component of this button
+
+    void Start()
+    {
+        slot = GetComponent<InventorySlot>();
+    }
+
+    void Update()
+    {
+        
+    }
+
+    /// <summary>
+    /// Responsible for updating the visual state of the action button icon.
+    /// </summary>
+
+    public void UpdateVisual()
+    {
+        slot.icon.sprite = MoveUI.instance.Put().icon;
+        slot.icon.color = Color.white;
+    }
+}

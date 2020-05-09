@@ -25,6 +25,10 @@ public class InventoryManager : MonoBehaviour
 
     public TextMeshProUGUI titleText;                   // the text component of the title
 
+    public InventorySlot movingSlot;                           // reference to the slot being moved
+
+    // DEBUG
+
     public Item[] weapons;
     public Item[] usables;
 
@@ -56,6 +60,28 @@ public class InventoryManager : MonoBehaviour
         }
 
         #endregion
+    }
+
+    /// <summary>
+    /// Handles the slot when items are being moved.
+    /// </summary>
+
+    public InventorySlot MovingSlot
+    {
+        get
+        {
+            return movingSlot;
+        }
+
+        set
+        {
+            movingSlot = value;
+
+            if (value != null)
+            {
+                movingSlot.icon.color = Color.grey;
+            }
+        }
     }
 
     /// <summary>

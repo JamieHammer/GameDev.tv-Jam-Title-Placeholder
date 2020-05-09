@@ -70,3 +70,12 @@ public enum UsableItemType
     HealthBoost, ExperienceBoost
 }
 
+/// <summary>
+/// To clarify which action button type the butten is.
+/// </summary>
+
+public enum ActionButtonType
+{
+    WeaponSlot, QuickUseSlot
+}
+
