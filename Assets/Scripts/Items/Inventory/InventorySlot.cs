@@ -14,9 +14,16 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
     public Image icon;                      // reference to the icon image component of this slot
 
     [SerializeField] GameObject removeBtn;  // reference to the remove item button of this slot
-    [SerializeField] TextMeshProUGUI stackCount;    // reference to the stack count text component
+    [SerializeField] TextMeshProUGUI stackCount;                // reference to the stack count text component
 
-    Stack<Item> items = new Stack<Item>();  // a stack of items in this slot
+    ObservableStack<Item> items = new ObservableStack<Item>();  // a stack of items in this slot
+
+    private void Awake()
+    {
+        items.OnPop += new UpdateStackEvent(UpdateSlot);
+        items.OnPush += new UpdateStackEvent(UpdateSlot);
+        items.OnClear += new UpdateStackEvent(UpdateSlot);
+    }
 
     /// <summary>
     /// Returns whether or not the slot is empty.
@@ -60,8 +67,6 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
         icon.enabled = true;
         removeBtn.SetActive(true);
         item.Slot = this;
-
-        UpdateSlot();
         return true;
     }
 
@@ -82,8 +87,6 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
             icon.enabled = false;
             removeBtn.SetActive(false);
         }
-
-        UpdateSlot();
     }
 
     /// <summary>
@@ -109,11 +112,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
 
     public void OnRemoveButton()
     {
-        // probably doesn't work anymore - todo reimplement
-
-        InventoryManager.instance.Remove(item);
-
-        UpdateSlot();
+        RemoveItem(item);
     }
 
     /// <summary>
@@ -125,10 +124,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
         if (item != null)
         {
             item.Use();
-            //RemoveItem(item);
         }
-
-        UpdateSlot();
     }
 
     /// <summary>
@@ -199,13 +195,44 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
         if (from.item.GetInventoryType() != item.GetInventoryType() ||
             from.items.Count + items.Count > item.GetStackSize())
         {
-            Stack<Item> tmpFrom = new Stack<Item>(from.items);
+            ObservableStack<Item> tmpFrom = new ObservableStack<Item>(from.items);
 
             from.items.Clear();
             from.AddItems(items);
 
             items.Clear();
             AddItems(tmpFrom);
+
+            Debug.Log("Item Swap");
+            return true;
+        }
+
+        Debug.Log("Swap failed");
+
+        return false;
+    }
+
+    /// <summary>
+    /// Responsible for trying to add the items to the slot.
+    /// </summary>
+    /// <param name="newItems">the stack of new items</param>
+    /// <returns></returns>
+
+    public bool AddItems(ObservableStack<Item> newItems)
+    {
+        if (IsEmpty || newItems.Peek().GetInventoryType() == item.GetInventoryType())
+        {
+            int count = newItems.Count;
+
+            for (int i = 0; i < count; i++)
+            {
+                if (IsFull)
+                {
+                    return false;
+                }
+
+                AddItem(newItems.Pop());
+            }
 
             return true;
         }
@@ -233,34 +260,6 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
     }
 
     /// <summary>
-    /// Responsible for trying to add the items to the slot.
-    /// </summary>
-    /// <param name="newItems">the stack of new items</param>
-    /// <returns></returns>
-
-    public bool AddItems(Stack<Item> newItems)
-    {
-        if (IsEmpty || newItems.Peek().GetInventoryType() == item.GetInventoryType())
-        {
-            int count = newItems.Count;
-
-            for (int i = 0; i < count; i++)
-            {
-                if (IsFull)
-                {
-                    return false;
-                }
-
-                AddItem(newItems.Pop());
-            }
-
-            return true;
-        }
-
-        return false;
-    }
-
-    /// <summary>
     /// Responsible for updating the stack size.
     /// </summary>
 
@@ -269,10 +268,19 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
         if (items.Count > 1)
         {
             stackCount.text = items.Count.ToString();
+            stackCount.color = Color.white;
+            icon.color = Color.white;
         }
         else
         {
-            stackCount.text = "";
+            stackCount.color = new Color(0, 0, 0, 0);
+        }
+
+        if (IsEmpty)
+        {
+            icon.color = new Color(0, 0, 0, 0);
+            stackCount.color = new Color(0, 0, 0, 0);
+            removeBtn.SetActive(false);
         }
     }
 
