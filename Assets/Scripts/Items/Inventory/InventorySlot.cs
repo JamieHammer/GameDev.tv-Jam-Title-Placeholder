@@ -112,7 +112,19 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
 
     public void OnRemoveButton()
     {
-        RemoveItem(item);
+        Clear();
+    }
+
+    /// <summary>
+    /// Responsible for clearing the slot.
+    /// </summary>
+
+    public void Clear()
+    {
+        if (items.Count > 0)
+        {
+            items.Clear();
+        }
     }
 
     /// <summary>
@@ -153,14 +165,15 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
 
             if (InventoryManager.instance.MovingSlot == null && !IsEmpty)
             {
-                MoveUI.instance.TakeMovable(item as Moveable);
+                MoveUI.instance.TakeMoveable(item as Moveable);
                 InventoryManager.instance.MovingSlot = this;
             }
             else if (InventoryManager.instance.MovingSlot != null)      // if we do have something to move
             {
                 // if the same slot is clicked, item is to be put back
 
-                if (PutItemBack() || SwapItems(InventoryManager.instance.MovingSlot) ||
+                if (PutItemBack() || MergeItems(InventoryManager.instance.MovingSlot) ||
+                    SwapItems(InventoryManager.instance.MovingSlot) ||
                     AddItems(InventoryManager.instance.MovingSlot.items))
                 {
                     MoveUI.instance.Drop();  
@@ -247,6 +260,36 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
                 }
 
                 AddItem(newItems.Pop());
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Resposnible for trying to merge two items.
+    /// </summary>
+    /// <param name="from"></param>
+    /// <returns></returns>
+
+    bool MergeItems(InventorySlot from)
+    {
+        if (IsEmpty)
+        {
+            return false;
+        }
+
+        if (from.item.GetName() == item.GetName() && !IsFull)
+        {
+            // calculate how many free spaces we have in the stack
+
+            int space = item.GetStackSize() - items.Count;
+
+            for (int i = 0; i < space; i++)
+            {
+                AddItem(from.items.Pop());
             }
 
             return true;

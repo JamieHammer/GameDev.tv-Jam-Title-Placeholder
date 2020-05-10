@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 /// <summary>
@@ -41,13 +42,19 @@ public class MoveUI : MonoBehaviour
     private void Update()
     {
         icon.transform.position = Input.mousePosition + offset;
+
+        if (Input.GetMouseButton(0) && !EventSystem.current.IsPointerOverGameObject()
+            && moveable != null)
+        {
+            DeleteItem();
+        }
     }
 
     /// <summary>
     /// Assigns the movable to move.
     /// </summary>
 
-    public void TakeMovable(Moveable newMoveable)
+    public void TakeMoveable(Moveable newMoveable)
     {
         moveable = newMoveable;
         icon.sprite = moveable.icon;
@@ -79,5 +86,20 @@ public class MoveUI : MonoBehaviour
         moveable = null;
 
         icon.color = new Color(0, 0, 0, 0);
+    }
+
+    /// <summary>
+    /// Used to delete an item from the inventory.
+    /// </summary>
+
+    public void DeleteItem()
+    {
+        if (moveable is Item && InventoryManager.instance.movingSlot != null)
+        {
+            (moveable as Item).Slot.Clear();
+        }
+
+        Drop();
+        InventoryManager.instance.movingSlot = null;
     }
 }
