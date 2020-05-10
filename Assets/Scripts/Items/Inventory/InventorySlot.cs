@@ -12,6 +12,8 @@ using TMPro;
 public class InventorySlot : MonoBehaviour, IPointerClickHandler
 {
     public Image icon;                      // reference to the icon image component of this slot
+    public InventoryType slotType;          // reference to the inventory type of this slot
+    public bool isActionButton;             // whether or not this slot is an action button
 
     [SerializeField] GameObject removeBtn;  // reference to the remove item button of this slot
     [SerializeField] TextMeshProUGUI stackCount;                // reference to the stack count text component
@@ -61,6 +63,11 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
 
     public bool AddItem(Item item)
     {
+        if (item.GetInventoryType() != slotType && slotType != InventoryType.None)
+        {
+            return false;
+        }
+
         items.Push(item);
 
         icon.sprite = item.GetIcon();
@@ -79,13 +86,6 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
         if (!IsEmpty)
         {
             items.Pop();
-        }
-
-        if (IsEmpty)
-        {
-            icon.sprite = null;
-            icon.enabled = false;
-            removeBtn.SetActive(false);
         }
     }
 
@@ -133,11 +133,16 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        // if right mouse click, use item
+        // if this slot is an action button, it will override right clicks
 
-        if (eventData.button == PointerEventData.InputButton.Right)
+        if (!isActionButton)
         {
-            UseItem();
+            // if right mouse click, use item
+
+            if (eventData.button == PointerEventData.InputButton.Right)
+            {
+                UseItem();
+            }
         }
 
         // if left mouse click, enable move
@@ -187,12 +192,17 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
 
     bool SwapItems(InventorySlot from)
     {
+        if (from.slotType != slotType && slotType != InventoryType.None)
+        {
+            return false;
+        }
+
         if (IsEmpty)
         {
             return false;
         }
 
-        if (from.item.GetInventoryType() != item.GetInventoryType() ||
+        if (from.item.GetName() != item.GetName() ||
             from.items.Count + items.Count > item.GetStackSize())
         {
             ObservableStack<Item> tmpFrom = new ObservableStack<Item>(from.items);
@@ -220,7 +230,12 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
 
     public bool AddItems(ObservableStack<Item> newItems)
     {
-        if (IsEmpty || newItems.Peek().GetInventoryType() == item.GetInventoryType())
+        if (newItems.Peek().GetInventoryType() != slotType && slotType != InventoryType.None)
+        {
+            return false;
+        }
+
+        if (IsEmpty || newItems.Peek().GetName() == item.GetName())
         {
             int count = newItems.Count;
 
@@ -268,18 +283,24 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
         if (items.Count > 1)
         {
             stackCount.text = items.Count.ToString();
-            stackCount.color = Color.white;
+
             icon.color = Color.white;
+            removeBtn.SetActive(true);
         }
         else
         {
-            stackCount.color = new Color(0, 0, 0, 0);
+            stackCount.text = "";
+
+            icon.color = Color.white;
+            removeBtn.SetActive(true);
         }
 
         if (IsEmpty)
         {
-            icon.color = new Color(0, 0, 0, 0);
-            stackCount.color = new Color(0, 0, 0, 0);
+            stackCount.text = "";
+
+            icon.sprite = null;
+            icon.enabled = false;
             removeBtn.SetActive(false);
         }
     }

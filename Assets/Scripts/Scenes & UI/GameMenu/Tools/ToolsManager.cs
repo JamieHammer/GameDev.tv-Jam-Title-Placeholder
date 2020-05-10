@@ -29,6 +29,8 @@ public class ToolsManager : MonoBehaviour
 
     public TextMeshProUGUI titleText;                   // the text component of the title
 
+    public Tool currentTool;                            // the current tool selected
+
     /// <summary>
     /// To show the title of the hovered inventory bag, while hovered.
     /// </summary>

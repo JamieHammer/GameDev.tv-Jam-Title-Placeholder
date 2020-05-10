@@ -53,6 +53,15 @@ public enum InventoryType
 }
 
 /// <summary>
+/// To distinct between the different tools.
+/// </summary>
+
+public enum Tool
+{
+    None, Character, Quests, Map
+}
+
+/// <summary>
 /// To clarify which type of equipment the item is.
 /// </summary>
 
@@ -78,4 +87,6 @@ public enum ActionButtonType
 {
     WeaponSlot, QuickUseSlot
 }
+
+
 

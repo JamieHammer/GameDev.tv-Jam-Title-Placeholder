@@ -13,8 +13,16 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler
 
     InventorySlot slot;                     // reference to the inventory slot component of this button
 
+    InventoryManager inventoryManager;      // reference to the inventory manager
+    EquipmentManager equipmentManager;      // reference to the equipment manager
+
+    // Debug
+    bool weaponDebug = false;
+
     void Start()
     {
+        inventoryManager = InventoryManager.instance;
+        equipmentManager = EquipmentManager.instance;
         slot = GetComponent<InventorySlot>();
     }
 
@@ -23,39 +31,91 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler
         
     }
 
-    /// <summary>
-    /// Responsible for updating the visual state of the action button icon.
-    /// </summary>
-
-    public void UpdateVisual()
-    {
-        slot.icon.sprite = MoveUI.instance.Put().icon;
-        slot.icon.color = Color.white;
-    }
-
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (eventData.button == PointerEventData.InputButton.Left)
+        if (!slot.IsEmpty)
         {
-            if (MoveUI.instance.moveable != null)
+            switch (type)
+            {
+                case ActionButtonType.WeaponSlot:
+                    if (eventData.button == PointerEventData.InputButton.Right)
+                    {
+                        if (weaponDebug)   // check if already equipped
+                        {
+                            DequipWeapon();
+                        }
+                        else
+                        {
+                            EquipWeapon();
+                        }
+                    }
+                    break;
+
+                case ActionButtonType.QuickUseSlot:
+                    if (eventData.button == PointerEventData.InputButton.Right)
+                    {
+                        slot.UseItem();
+                    }
+                    break;
+            }
+        }
+        else
+        {
+            if (MoveUI.instance.moveable == null)
             {
                 switch (type)
                 {
                     case ActionButtonType.WeaponSlot:
-                        if (true)   // check if type weapon
-                        {
-                            UpdateVisual();
-                        }
+                        OpenEquipmentBag();
                         break;
 
                     case ActionButtonType.QuickUseSlot:
-                        if (true)   // check if type usable
-                        {
-                            UpdateVisual();
-                        }
+                        OpenUsableItemsBag();
                         break;
                 }
             }
         }
+    }
+
+    /// <summary>
+    /// Equips the selected weapon.
+    /// </summary>
+
+    void EquipWeapon()
+    {
+        // todo equip weapon
+        Debug.Log("Equipping weapon");
+        weaponDebug = true;
+    }
+
+    /// <summary>
+    /// Dequips the selected weapon.
+    /// </summary>
+
+    void DequipWeapon()
+    {
+        // todo dequip weapon
+        Debug.Log("Dequipping weapon");
+        weaponDebug = false;
+    }
+
+    /// <summary>
+    /// Opens the equipment bag, in case the slot is empty.
+    /// </summary>
+
+    void OpenEquipmentBag()
+    {
+        // todo
+        Debug.Log("Open equipment inventory bag");
+    }
+
+    /// <summary>
+    /// Opens the usable items bag, in case the slot is empty.
+    /// </summary>
+
+    void OpenUsableItemsBag()
+    {
+        // todo
+        Debug.Log("Open usable items inventory bag");
     }
 }
