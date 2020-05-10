@@ -67,7 +67,7 @@ public enum Tool
 
 public enum EquipmentType
 {
-    Weapon, Armour, Shield
+    Weapon, Shield, Legs, Torso, Head
 }
 
 /// <summary>

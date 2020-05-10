@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class ToolsUI : MonoBehaviour
 {
@@ -19,12 +20,12 @@ public class ToolsUI : MonoBehaviour
             Destroy(gameObject);
         }
 
-        tools = ToolsManager.instance;
-
         SetupTools();
     }
 
     #endregion
+
+    public TextMeshProUGUI titleText;           // the title text component
 
     [SerializeField] GameObject character;      // the character tool
     [SerializeField] GameObject quests;         // the quests tool
@@ -43,6 +44,8 @@ public class ToolsUI : MonoBehaviour
 
     private void SetupTools()
     {
+        tools = ToolsManager.instance;
+
         gameObject.SetActive(false);
     }
 
@@ -52,6 +55,11 @@ public class ToolsUI : MonoBehaviour
 
     public void UpdateUI()
     {
+        if (tools == null)
+        {
+            tools = ToolsManager.instance;
+        }
+
         HideAll();
 
         switch (tools.currentTool)
@@ -61,14 +69,17 @@ public class ToolsUI : MonoBehaviour
                 break;
 
             case Tool.Character:
+                UpdateTitle("Character");
                 character.SetActive(true);
                 break;
 
             case Tool.Quests:
+                UpdateTitle("Quests");
                 quests.SetActive(true);
                 break;
 
             case Tool.Map:
+                UpdateTitle("Map");
                 map.SetActive(true);
                 break;
         }
@@ -83,5 +94,15 @@ public class ToolsUI : MonoBehaviour
         character.SetActive(false);
         quests.SetActive(false);
         map.SetActive(false);
+    }
+
+    /// <summary>
+    /// Updates the title of the inventory window.
+    /// </summary>
+    /// <param name="title">the active title</param>
+
+    void UpdateTitle(string title)
+    {
+        titleText.text = title;
     }
 }

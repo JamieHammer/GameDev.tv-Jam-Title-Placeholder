@@ -170,7 +170,7 @@ public class InventoryManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Responsible for showing the inventory window.
+    /// Responsible for hiding the inventory window.
     /// </summary>
 
     public void HideInventory()

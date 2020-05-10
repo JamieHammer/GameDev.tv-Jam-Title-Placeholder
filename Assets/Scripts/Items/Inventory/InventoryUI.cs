@@ -20,8 +20,8 @@ public class InventoryUI : MonoBehaviour
     InventoryManager inventory;                 // reference to the inventory manager
 
     public List<InventorySlot> equipmentSlots = new List<InventorySlot>();      // a list of equipment slots
-    public List<InventorySlot> usableItemSlots = new List<InventorySlot>();  // a list of equipment slots
-    public List<InventorySlot> questItemSlots = new List<InventorySlot>();      // a list of equipment slots
+    public List<InventorySlot> usableItemSlots = new List<InventorySlot>();     // a list of usable item slots
+    public List<InventorySlot> questItemSlots = new List<InventorySlot>();      // a list of quest item slots
 
     private void Awake()
     {
