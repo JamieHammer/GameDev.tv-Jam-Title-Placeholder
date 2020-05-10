@@ -6,7 +6,6 @@ using UnityEngine;
 /// Base class of all inventory items.
 /// </summary>
 
-[CreateAssetMenu(fileName = "New Item", menuName = "Inventory/Item")]
 public abstract class Item : ScriptableObject, Moveable
 {
     [Header("Info")]
@@ -78,7 +77,7 @@ public abstract class Item : ScriptableObject, Moveable
 
     public virtual void Use()
     {
-        Debug.Log("Using " + name);
+        // should be overwritten
     }
 
     /// <summary>

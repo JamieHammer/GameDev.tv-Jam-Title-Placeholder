@@ -56,10 +56,6 @@ public class Equipment : Item
     {
         base.Use();
 
-        EquipmentManager.instance.Equip(this);
-
-        RemoveFromInventory();
-
-        Debug.Log("Equiping " + name);
+        CharacterPanel.instance.EquipItem(this);
     }
 }

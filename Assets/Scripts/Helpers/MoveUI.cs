@@ -86,6 +86,8 @@ public class MoveUI : MonoBehaviour
         moveable = null;
 
         icon.color = new Color(0, 0, 0, 0);
+
+        InventoryManager.instance.movingSlot = null;
     }
 
     /// <summary>

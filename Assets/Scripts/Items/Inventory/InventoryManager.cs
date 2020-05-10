@@ -30,6 +30,7 @@ public class InventoryManager : MonoBehaviour
     // DEBUG
 
     public Item[] weapons;
+    public Item[] clothes;
     public Item[] usables;
 
     private void Awake()
@@ -57,6 +58,10 @@ public class InventoryManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.X))
         {
             AddItem(usables[Random.Range(0, usables.Length - 1)]);
+        }
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            AddItem(clothes[Random.Range(0, clothes.Length - 1)]);
         }
 
         #endregion

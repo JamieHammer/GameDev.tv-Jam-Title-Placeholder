@@ -37,15 +37,40 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
     }
 
     /// <summary>
+    /// Returns the current equipment.
+    /// </summary>
+
+    public Equipment GetEquipment()
+    {
+        return equipment;
+    }
+
+    /// <summary>
     /// Responsible for equiping an item.
     /// </summary>
     /// <param name="newEquipment"></param>
 
-    void EquipItem(Equipment newEquipment)
+    public void EquipItem(Equipment newEquipment)
     {
+        newEquipment.RemoveFromInventory();
+
+        if (equipment != null)
+        {
+            equipment.Slot.AddItem(equipment);
+            UIManager.instance.RefreshToolTip();
+        }
+        else
+        {
+            UIManager.instance.HideToolTip();
+        }
+
         icon.enabled = true;
         icon.sprite = newEquipment.icon;
         equipment = newEquipment;
-        MoveUI.instance.DeleteItem();
+
+        if (MoveUI.instance.moveable == (newEquipment as Moveable))
+        {
+            MoveUI.instance.Drop();
+        }
     }
 }
