@@ -13,6 +13,13 @@ MonoBehaviour:
   m_Name: Small Experience Potion
   m_EditorClassIdentifier: 
   itemName: Small Experience Potion
+  itemDescription: 'A small flask, of something blue and
+
+    sticky, the drink of
+    champions, really.
+
+    No matter what it is, it makes you feel strong.'
+  itemInfo: 'Experience: +10 EXP'
   inventoryType: 2
   itemIcon: {fileID: 21300000, guid: b7f77607c82ea4142a2070c0e37e1756, type: 3}
   stackSize: 15

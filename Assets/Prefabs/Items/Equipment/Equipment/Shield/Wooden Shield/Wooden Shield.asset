@@ -13,6 +13,13 @@ MonoBehaviour:
   m_Name: Wooden Shield
   m_EditorClassIdentifier: 
   itemName: Wooden Shield
+  itemDescription: 'A trusty old shield, made mostly
+
+    out of wood. It is brilliant
+
+    craftman''s
+    ship.'
+  itemInfo: 'Defence: +3'
   inventoryType: 1
   itemIcon: {fileID: 21300000, guid: 615f3cdaa1374bd4db14286066f31cde, type: 3}
   stackSize: 1

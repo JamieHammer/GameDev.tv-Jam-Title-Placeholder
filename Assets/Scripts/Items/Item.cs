@@ -12,6 +12,12 @@ public abstract class Item : ScriptableObject, Moveable
 
     [SerializeField] string itemName;                   // the name of this inventory item
 
+    [TextArea(3, 3)]
+    [SerializeField] string itemDescription;            // the description of this item
+
+    [TextArea(3, 3)]
+    [SerializeField] string itemInfo;                   // info about the effect of the item
+
     [SerializeField] InventoryType inventoryType;       // the type of this inventory item
 
     [SerializeField] Sprite itemIcon;                   // the icon of this inventory item
@@ -36,6 +42,24 @@ public abstract class Item : ScriptableObject, Moveable
     public string GetName()
     {
         return itemName;
+    }
+
+    /// <summary>
+    /// Returns the description of this item.
+    /// </summary>
+
+    public string GetDescription()
+    {
+        return itemDescription;
+    }
+
+    /// <summary>
+    /// Returns the effect info of this item.
+    /// </summary>
+
+    public string GetInfo()
+    {
+        return itemInfo;
     }
 
     /// <summary>

@@ -9,7 +9,7 @@ using TMPro;
 /// Responsible for the inventory slot the script is attached to.
 /// </summary>
 
-public class InventorySlot : MonoBehaviour, IPointerClickHandler
+public class InventorySlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public Image icon;                      // reference to the icon image component of this slot
     public InventoryType slotType;          // reference to the inventory type of this slot
@@ -181,6 +181,27 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler
                 }
             }
         }
+    }
+
+    /// <summary>
+    /// Handles mouse enter events on this slot button.
+    /// </summary>
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (!IsEmpty)
+        {
+            UIManager.instance.ShowTooltip(transform.position, item);
+        }
+    }
+
+    /// <summary>
+    /// Handles mouse exit events on this slot button.
+    /// </summary>
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        UIManager.instance.HideTooltip();
     }
 
     /// <summary>

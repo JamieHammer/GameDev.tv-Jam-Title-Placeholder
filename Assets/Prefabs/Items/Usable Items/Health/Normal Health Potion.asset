@@ -13,6 +13,13 @@ MonoBehaviour:
   m_Name: Normal Health Potion
   m_EditorClassIdentifier: 
   itemName: Normal Health Potion
+  itemDescription: 'A regular sized, however oddly shaped flask,
+
+    filled with
+    a red, vaguely iron tasting liquid.
+
+    No matter what it is, it feels refreshing.'
+  itemInfo: 'Health: +15 HP'
   inventoryType: 2
   itemIcon: {fileID: 21300000, guid: 44dc65116207f4b46aa85443dae5ad96, type: 3}
   stackSize: 10

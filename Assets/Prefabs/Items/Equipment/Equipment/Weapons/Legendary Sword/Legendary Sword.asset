@@ -13,6 +13,16 @@ MonoBehaviour:
   m_Name: Legendary Sword
   m_EditorClassIdentifier: 
   itemName: Legendary Sword
+  itemDescription: 'This sword is said to have been forged by none
+
+    other than
+    King Midas himself. Whether it''s true
+
+    or not, no one knows; but it sure
+    looks pretty in gold.'
+  itemInfo: 'Attack: +10
+
+    Defence: +5'
   inventoryType: 1
   itemIcon: {fileID: 21300000, guid: 90e99a7fde056a4418b9fe16084adb5c, type: 3}
   stackSize: 1

@@ -57,11 +57,11 @@ public class EquipmentSlot : MonoBehaviour, IPointerClickHandler
         if (equipment != null)
         {
             equipment.Slot.AddItem(equipment);
-            UIManager.instance.RefreshToolTip();
+            UIManager.instance.RefreshTooltip();
         }
         else
         {
-            UIManager.instance.HideToolTip();
+            UIManager.instance.HideTooltip();
         }
 
         icon.enabled = true;

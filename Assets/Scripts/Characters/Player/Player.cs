@@ -51,14 +51,14 @@ public class Player : CharacterStats
     {
         if (newItem != null)
         {
-            defence.AddModifier(newItem.GetArmourModifier());
-            attack.AddModifier(newItem.GetDamageModifier());
+            defence.AddModifier(newItem.GetDefenceModifier());
+            attack.AddModifier(newItem.GetAttackModifier());
         }
 
         if (oldItem != null)
         {
-            defence.RemoveModifier(oldItem.GetArmourModifier());
-            attack.RemoveModifier(oldItem.GetDamageModifier());
+            defence.RemoveModifier(oldItem.GetDefenceModifier());
+            attack.RemoveModifier(oldItem.GetAttackModifier());
         }
     }
 
@@ -201,7 +201,7 @@ public class Player : CharacterStats
 
     public void UpdateUI()
     {
-        playerWindow.SetPlayer();        
+        playerWindow.SetPlayer();
     }
 
     /// <summary>
