@@ -12,6 +12,7 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler
     public ActionButtonType type;           // to set a button type
 
     InventorySlot slot;                     // reference to the inventory slot component of this button
+    EquipmentSlot equipmentSlot;            // reference to the equipment slot component of this button
 
     InventoryManager inventoryManager;      // reference to the inventory manager
     EquipmentManager equipmentManager;      // reference to the equipment manager
@@ -23,56 +24,84 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler
     {
         inventoryManager = InventoryManager.instance;
         equipmentManager = EquipmentManager.instance;
-        slot = GetComponent<InventorySlot>();
+
+        switch (type)
+        {
+            case ActionButtonType.WeaponSlot:
+                equipmentSlot = GetComponent<EquipmentSlot>();
+                break;
+
+            case ActionButtonType.QuickUseSlot:
+                slot = GetComponent<InventorySlot>();
+                break;
+        }
     }
 
-    void Update()
-    {
-        
-    }
+    /// <summary>
+    /// Responsible for handling click events.
+    /// </summary>
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (!slot.IsEmpty)
+        switch (type)
         {
-            switch (type)
-            {
-                case ActionButtonType.WeaponSlot:
-                    if (eventData.button == PointerEventData.InputButton.Right)
-                    {
-                        if (weaponDebug)   // check if already equipped
-                        {
-                            DequipWeapon();
-                        }
-                        else
-                        {
-                            EquipWeapon();
-                        }
-                    }
-                    break;
+            case ActionButtonType.WeaponSlot:
+                WeaponSlot(eventData);
+                break;
 
-                case ActionButtonType.QuickUseSlot:
-                    if (eventData.button == PointerEventData.InputButton.Right)
-                    {
-                        slot.UseItem();
-                    }
-                    break;
+            case ActionButtonType.QuickUseSlot:
+                QuickUseSlot(eventData);
+                break;
+        }
+    }
+
+    /// <summary>
+    /// Responsible for weapon slot specific click events.
+    /// </summary>
+
+    void WeaponSlot(PointerEventData eventData)
+    {
+        if (equipmentSlot.GetEquipment() != null)
+        {
+            if (eventData.button == PointerEventData.InputButton.Right)
+            {
+                if (weaponDebug)   // check if already equipped
+                {
+                    DequipWeapon();
+                }
+                else
+                {
+                    EquipWeapon();
+                }
             }
         }
         else
         {
             if (MoveUI.instance.moveable == null)
             {
-                switch (type)
-                {
-                    case ActionButtonType.WeaponSlot:
-                        OpenEquipmentBag();
-                        break;
+                OpenEquipmentBag();
+            }
+        }
+    }
 
-                    case ActionButtonType.QuickUseSlot:
-                        OpenUsableItemsBag();
-                        break;
-                }
+    /// <summary>
+    /// Responsible for quick use slot specific click events.
+    /// </summary>
+
+    void QuickUseSlot(PointerEventData eventData)
+    {
+        if (!slot.IsEmpty)
+        {
+            if (eventData.button == PointerEventData.InputButton.Right)
+            {
+                slot.UseItem();
+            }
+        }
+        else
+        {
+            if (MoveUI.instance.moveable == null)
+            {
+                OpenUsableItemsBag();
             }
         }
     }

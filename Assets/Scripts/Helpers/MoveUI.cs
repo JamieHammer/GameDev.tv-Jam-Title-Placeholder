@@ -96,9 +96,19 @@ public class MoveUI : MonoBehaviour
 
     public void DeleteItem()
     {
-        if (moveable is Item && InventoryManager.instance.movingSlot != null)
+        if (moveable is Item)
         {
-            (moveable as Item).Slot.Clear();
+            Item item = (Item)moveable;
+
+            if (item.Slot != null)
+            {
+                item.Slot.Clear();
+            }
+
+            if (item.equipmentSlot != null)
+            {
+                item.equipmentSlot.DequipItem();
+            }
         }
 
         Drop();

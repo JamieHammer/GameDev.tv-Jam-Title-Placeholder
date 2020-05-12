@@ -23,6 +23,8 @@ public abstract class Item : ScriptableObject, Moveable
 
     [SerializeField] InventorySlot slot;                // reference to this item's inventory slot
 
+    public EquipmentSlot equipmentSlot;                 // reference to this item's equipment slot
+
     #region Modifiers
 
     [Header("Modifiers")]
@@ -127,6 +129,7 @@ public abstract class Item : ScriptableObject, Moveable
         if (slot != null)
         {
             slot.RemoveItem(this);
+            slot = null;
         }
     }
 }

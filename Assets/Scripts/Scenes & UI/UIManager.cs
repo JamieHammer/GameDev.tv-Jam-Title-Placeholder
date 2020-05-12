@@ -51,14 +51,23 @@ public class UIManager : MonoBehaviour
 
     Item item;                                          // reference to the currently highlighted item
 
+    RectTransform tooltipRect;                          // reference to the rect transform of the tooltip
+
     /// <summary>
     /// Responsible for showing the tooltip.
     /// </summary>
     /// <param name="position">The position of the highlighted slot</param>
     /// <param name="newItem">the item, which info is shown</param>
 
-    public void ShowTooltip(Vector3 position, Item newItem)
+    public void ShowTooltip(Vector2 pivot, Vector3 position, Item newItem)
     {
+        if (tooltipRect == null)
+        {
+            tooltipRect = tooltip.GetComponent<RectTransform>();
+        }
+
+        tooltipRect.pivot = pivot;
+
         item = newItem;
 
         RefreshTooltip();

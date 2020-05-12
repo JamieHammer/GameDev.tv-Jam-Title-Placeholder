@@ -151,7 +151,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IPointerEnterH
         {
             // if right mouse click, use item
 
-            if (eventData.button == PointerEventData.InputButton.Right)
+            if (eventData.button == PointerEventData.InputButton.Right && MoveUI.instance.moveable == null)
             {
                 UseItem();
             }
@@ -165,8 +165,37 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IPointerEnterH
 
             if (InventoryManager.instance.MovingSlot == null && !IsEmpty)
             {
-                MoveUI.instance.TakeMoveable(item as Moveable);
-                InventoryManager.instance.MovingSlot = this;
+                if (MoveUI.instance.moveable != null)
+                {
+                    if (MoveUI.instance.moveable is Equipment)
+                    {
+                        if (item is Equipment && (item as Equipment).GetEquipmentType() ==
+                            (MoveUI.instance.moveable as Equipment).GetEquipmentType())
+                        {
+                            (item as Equipment).Use();
+                            UIManager.instance.RefreshTooltip();
+                            MoveUI.instance.Drop();
+                        }
+                    }
+                }
+                else
+                {
+                    MoveUI.instance.TakeMoveable(item as Moveable);
+                    InventoryManager.instance.MovingSlot = this;
+                }
+            }
+            else if (InventoryManager.instance.MovingSlot == null && IsEmpty)
+            {
+                if (MoveUI.instance.moveable is Equipment)
+                {
+                    Equipment equipment = (Equipment)MoveUI.instance.moveable;
+
+                    if (AddItem(equipment))
+                    {
+                        CharacterPanel.instance.currentlySelectedSlot.DequipItem();
+                        MoveUI.instance.Drop();
+                    }
+                }
             }
             else if (InventoryManager.instance.MovingSlot != null)      // if we do have something to move
             {
@@ -176,7 +205,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IPointerEnterH
                     SwapItems(InventoryManager.instance.MovingSlot) ||
                     AddItems(InventoryManager.instance.MovingSlot.items))
                 {
-                    MoveUI.instance.Drop();  
+                    MoveUI.instance.Drop();
                     InventoryManager.instance.MovingSlot = null;
                 }
             }
@@ -191,7 +220,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     {
         if (!IsEmpty)
         {
-            UIManager.instance.ShowTooltip(transform.position, item);
+            UIManager.instance.ShowTooltip(new Vector2(1,0), transform.position, item);
         }
     }
 

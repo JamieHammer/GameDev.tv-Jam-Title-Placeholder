@@ -26,12 +26,16 @@ public class CharacterPanel : MonoBehaviour
 
     #endregion
 
+    #region Equipment
+
     [Header("Equipment Slots")]
 
-    [SerializeField] EquipmentSlot head;         // the equipment slots of the panel
+    [SerializeField] EquipmentSlot head;            // the equipment slots of the panel
 
     [SerializeField] EquipmentSlot torso, legs,
         primaryWeapon, secondaryWeapon, shield;
+
+    public EquipmentSlot currentlySelectedSlot;     // reference to the currently selected slot
 
     /// <summary>
     /// Responsible for equiping, equipable items.
@@ -105,14 +109,28 @@ public class CharacterPanel : MonoBehaviour
 
     void ForceFirst(Equipment equipment)
     {
+        // reference the secondary weapon slot as tmp and clear the slot
 
+        Equipment tmpEquipment = secondaryWeapon.GetEquipment();
 
-        // todo take the secondary weapon and move back to inventory
-        // clear secondary slot
-        // take the primary weapon and move to secondary
-        // clear the primary slot
-        // take the equipment and equip it as primary weapon
+        secondaryWeapon.DequipItem();
+
+        // move primary weapon to secondary slot and clear slot
+
+        EquipSecondary(primaryWeapon.GetEquipment());
+
+        primaryWeapon.DequipItem();
+
+        // equip the item as primary weapon
+
+        EquipPrimary(equipment);
+
+        // finally, add the tmp back to the inventory
+
+        InventoryManager.instance.AddItem(tmpEquipment);
 
         Debug.Log("Forced the equipment as primary weapon.");
     }
+
+    #endregion
 }
