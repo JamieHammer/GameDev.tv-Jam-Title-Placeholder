@@ -13,18 +13,12 @@ MonoBehaviour:
   m_Name: Long Sword
   m_EditorClassIdentifier: 
   itemName: Long Sword
-  itemDescription: 'This is a typical, non-typical long sword.
-
-    It is made of
-    silver, so it has that going
-
-    for it, I guess. Wonder if there is a sword
-    made of gold...'
+  itemDescription: This is a typical, non-typical long sword. It is made of silver,
+    so it has that going for it, I guess. Wonder if there is a sword made of gold...
   inventoryType: 1
   itemIcon: {fileID: 21300000, guid: 95052c6b62fb3de4695beaa99f842ac2, type: 3}
   stackSize: 1
   slot: {fileID: 0}
-  equipmentType: 0
   modifiers:
     strength: 2
     stamina: 0
@@ -34,3 +28,6 @@ MonoBehaviour:
     luck: 2
     attack: 6
     defence: 4
+    health: 0
+    experience: 0
+  equipmentType: 0

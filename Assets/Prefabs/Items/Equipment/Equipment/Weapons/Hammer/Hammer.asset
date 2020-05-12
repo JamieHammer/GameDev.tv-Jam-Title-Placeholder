@@ -13,17 +13,12 @@ MonoBehaviour:
   m_Name: Hammer
   m_EditorClassIdentifier: 
   itemName: Hammer
-  itemDescription: 'Can this hammer deal damage? Why
-
-    don''t you ask that guy
-    over there
-
-    nailed to the side of the tree?'
+  itemDescription: Can this hammer deal damage? Why don't you ask that guy over there
+    nailed to the side of the tree?
   inventoryType: 1
   itemIcon: {fileID: 21300000, guid: 7b8e0222a006d824e930445c7d435ac3, type: 3}
   stackSize: 1
   slot: {fileID: 0}
-  equipmentType: 0
   modifiers:
     strength: 3
     stamina: 1
@@ -33,3 +28,6 @@ MonoBehaviour:
     luck: 1
     attack: 6
     defence: 3
+    health: 0
+    experience: 0
+  equipmentType: 0

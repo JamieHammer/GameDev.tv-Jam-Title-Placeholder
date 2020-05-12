@@ -13,17 +13,12 @@ MonoBehaviour:
   m_Name: Green Pants
   m_EditorClassIdentifier: 
   itemName: Green Pants
-  itemDescription: 'A pair of green pants. There isn''t
-
-    a lot to say about them,
-    really...
-
-    They are just pants.'
+  itemDescription: A pair of green pants. There isn't a lot to say about them, really...
+    They are just pants.
   inventoryType: 1
   itemIcon: {fileID: 21300000, guid: 29a1226f7b5e20240942612e151c3c4c, type: 3}
   stackSize: 1
   slot: {fileID: 0}
-  equipmentType: 2
   modifiers:
     strength: 0
     stamina: 2
@@ -33,3 +28,6 @@ MonoBehaviour:
     luck: 0
     attack: 0
     defence: 2
+    health: 0
+    experience: 0
+  equipmentType: 2

@@ -13,17 +13,12 @@ MonoBehaviour:
   m_Name: Tunic
   m_EditorClassIdentifier: 
   itemName: Tunic
-  itemDescription: 'A tunic fit for working in the fields
-
-    of a medievil suburb,
-    and not much
-
-    else. That got oddly specific...'
+  itemDescription: A tunic fit for working in the fields of a medievil suburb, and
+    not much else. That got oddly specific...
   inventoryType: 1
   itemIcon: {fileID: 21300000, guid: 541ae020fad5efc48a89a38c6218a601, type: 3}
   stackSize: 1
   slot: {fileID: 0}
-  equipmentType: 3
   modifiers:
     strength: 2
     stamina: 4
@@ -33,3 +28,6 @@ MonoBehaviour:
     luck: 0
     attack: 1
     defence: 2
+    health: 0
+    experience: 0
+  equipmentType: 3

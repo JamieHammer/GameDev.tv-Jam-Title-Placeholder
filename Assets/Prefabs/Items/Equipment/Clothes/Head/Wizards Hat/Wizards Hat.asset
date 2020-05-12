@@ -13,17 +13,12 @@ MonoBehaviour:
   m_Name: Wizards Hat
   m_EditorClassIdentifier: 
   itemName: Wizards Hat
-  itemDescription: 'Whatever it lacks in style, it makes up
-
-    for in protection.
-    Anyone would think
-
-    twice, before messing with a sorcerer.'
+  itemDescription: Whatever it lacks in style, it makes up for in protection. Anyone
+    would think twice, before messing with a sorcerer.
   inventoryType: 1
   itemIcon: {fileID: 21300000, guid: b28311bcbf17b47458fddc96553ce9c8, type: 3}
   stackSize: 1
   slot: {fileID: 0}
-  equipmentType: 4
   modifiers:
     strength: 1
     stamina: 0
@@ -33,3 +28,6 @@ MonoBehaviour:
     luck: 0
     attack: 3
     defence: 6
+    health: 0
+    experience: 0
+  equipmentType: 4

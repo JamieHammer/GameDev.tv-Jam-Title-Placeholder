@@ -41,9 +41,11 @@ public class UIManager : MonoBehaviour
 
     [Space]
 
-    List<int> modifiers = new List<int>();              // a list of modifiers
+    [SerializeField] List<EffectInfo> infoRows = new List<EffectInfo>(); // a list of effect info components
 
-    List<GameObject> infoRows = new List<GameObject>(); // a list of effect info game objects
+    [SerializeField] Image icon;                        // the image component of the icon
+
+    List<int> modifiers = new List<int>();              // a list of modifiers
 
     int modifierCount;                                  // the count of modifiers
 
@@ -82,16 +84,22 @@ public class UIManager : MonoBehaviour
 
     public void RefreshTooltip()
     {
+        icon.sprite = item.icon;
         toolTitle.text = item.GetName();
         toolDescription.text = item.GetDescription();
 
         EffectInfo();
     }
 
+    /// <summary>
+    /// Handles the effect information.
+    /// </summary>
+
     void EffectInfo()
     {
         modifiers.Clear();
         modifierCount = 0;
+        HideAllInfoRows();
 
         modifiers = item.GetModifiers();
 
@@ -106,19 +114,132 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Responsible for reseting the effect info rows.
+    /// </summary>
+
+    void HideAllInfoRows()
+    {
+        for (int i = 0; i < infoRows.Count; i++)
+        {
+            infoRows[i].HideInfo();
+            infoRows[i].gameObject.SetActive(false);
+        }
+    }
+
+    /// <summary>
+    /// Responsible for showing the correct row and query the string.
+    /// </summary>
+    /// <param name="index">this is the index of the stat</param>
+    /// <param name="value">this is the value of the modifier</param>
+
     void ShowEffectInfo(int index, int value)
     {
-        Debug.Log("the index " + index + " is " + value);
-
         switch (modifierCount)
         {
-            default:
+            case 0:
+                infoRows[0].gameObject.SetActive(true);
+                infoRows[0].ShowFirstInfo(InfoText(index, value));
+                break;
+
+            case 1:
+                infoRows[0].ShowSecondInfo(InfoText(index, value));
+                break;
+
+            case 2:
+                infoRows[1].gameObject.SetActive(true);
+                infoRows[1].ShowFirstInfo(InfoText(index, value));
+                break;
+
+            case 3:
+                infoRows[1].ShowSecondInfo(InfoText(index, value));
+                break;
+
+            case 4:
+                infoRows[2].gameObject.SetActive(true);
+                infoRows[2].ShowFirstInfo(InfoText(index, value));
+                break;
+
+            case 5:
+                infoRows[2].ShowSecondInfo(InfoText(index, value));
+                break;
+
+            case 6:
+                infoRows[3].gameObject.SetActive(true);
+                infoRows[3].ShowFirstInfo(InfoText(index, value));
+                break;
+
+            case 7:
+                infoRows[3].ShowSecondInfo(InfoText(index, value));
                 break;
         }
 
         modifierCount++;
+    }
 
-        Debug.Log(modifierCount);
+    /// <summary>
+    /// This returns a string to send to the effect info class.
+    /// </summary>
+
+    string InfoText(int index, int value)
+    {
+        StringBuilder info = new StringBuilder();
+
+        switch (index)
+        {
+            case 0:     // Strength
+                info.Append("Strength: ");
+                break;
+
+            case 1:     // Stamina
+                info.Append("Stamina: ");
+                break;
+
+            case 2:     // Intelligence
+                info.Append("Intelligence: ");
+                break;
+
+            case 3:     // Dexterity
+                info.Append("Dexterity: ");
+                break;
+
+            case 4:     // Charisma
+                info.Append("Charisma: ");
+                break;
+
+            case 5:     // Luck
+                info.Append("Luck: ");
+                break;
+
+            case 6:     // Attack
+                info.Append("Attack: ");
+                break;
+
+            case 7:     // Defence
+                info.Append("Defence: ");
+                break;
+
+            case 8:     // Health
+                info.Append("Health: ");
+                break;
+
+            case 9:     // Experience
+                info.Append("Experience: ");
+                break;
+        }
+
+        if (value > 0)
+        {
+            info.Append("+" + value);
+        }
+        else
+        {
+            info.Append(value);
+        }
+
+        string infoText = info.ToString();
+
+        return infoText;
     }
 
     #endregion

@@ -1,0 +1,48 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using TMPro;
+
+/// <summary>
+/// Handles the effect info row in the tooltip.
+/// </summary>
+
+public class EffectInfo : MonoBehaviour
+{
+    [SerializeField] TextMeshProUGUI firstInfo;     // reference to the first info text component
+    [SerializeField] TextMeshProUGUI secondInfo;    // reference to the second info text component
+
+    /// <summary>
+    /// Hides the two text components, to start off fresh.
+    /// </summary>
+
+    public void HideInfo()
+    {
+        firstInfo.gameObject.SetActive(false);
+        secondInfo.gameObject.SetActive(false);
+    }
+
+    /// <summary>
+    /// Shows the first text component and updates the text.
+    /// </summary>
+    /// <param name="text">the info to show</param>
+
+    public void ShowFirstInfo(string text)
+    {
+        firstInfo.gameObject.SetActive(true);
+
+        firstInfo.text = text;
+    }
+
+    /// <summary>
+    /// Shows the second text component and updates the text.
+    /// </summary>
+    /// <param name="text">the info to show</param>
+
+    public void ShowSecondInfo(string text)
+    {
+        secondInfo.gameObject.SetActive(true);
+
+        secondInfo.text = text;
+    }
+}
