@@ -16,13 +16,17 @@ MonoBehaviour:
   itemDescription: 'I think this thing speaks for it self.
 
     Peace!'
-  itemInfo: 'Attack: +10
-
-    Defence: +10'
   inventoryType: 1
   itemIcon: {fileID: 21300000, guid: 1877011fdc8954440a807dd46b4eaab4, type: 3}
   stackSize: 1
   slot: {fileID: 0}
   equipmentType: 0
-  armourModifier: 10
-  damageModifier: 10
+  modifiers:
+    strength: 10
+    stamina: 10
+    intelligence: 10
+    dexterity: 10
+    charisma: 10
+    luck: 10
+    attack: 10
+    defence: 10

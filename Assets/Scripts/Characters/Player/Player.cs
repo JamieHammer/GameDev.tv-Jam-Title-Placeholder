@@ -51,14 +51,36 @@ public class Player : CharacterStats
     {
         if (newItem != null)
         {
-            defence.AddModifier(newItem.GetDefenceModifier());
-            attack.AddModifier(newItem.GetAttackModifier());
+            List<int> newItemModifiers = newItem.GetModifiers();
+
+            strength.AddModifier(newItemModifiers[0]);
+            stamina.AddModifier(newItemModifiers[1]);
+            intelligence.AddModifier(newItemModifiers[2]);
+            dexterity.AddModifier(newItemModifiers[3]);
+            charisma.AddModifier(newItemModifiers[4]);
+            luck.AddModifier(newItemModifiers[5]);
+            attack.AddModifier(newItemModifiers[6]);
+            defence.AddModifier(newItemModifiers[7]);
+
+            //defence.AddModifier(newItem.GetDefenceModifier());
+            //attack.AddModifier(newItem.GetAttackModifier());
         }
 
         if (oldItem != null)
         {
-            defence.RemoveModifier(oldItem.GetDefenceModifier());
-            attack.RemoveModifier(oldItem.GetAttackModifier());
+            List<int> oldItemModifiers = oldItem.GetModifiers();
+
+            strength.RemoveModifier(oldItemModifiers[0]);
+            stamina.RemoveModifier(oldItemModifiers[1]);
+            intelligence.RemoveModifier(oldItemModifiers[2]);
+            dexterity.RemoveModifier(oldItemModifiers[3]);
+            charisma.RemoveModifier(oldItemModifiers[4]);
+            luck.RemoveModifier(oldItemModifiers[5]);
+            attack.RemoveModifier(oldItemModifiers[6]);
+            defence.RemoveModifier(oldItemModifiers[7]);
+
+            //defence.RemoveModifier(oldItem.GetDefenceModifier());
+            //attack.RemoveModifier(oldItem.GetAttackModifier());
         }
     }
 

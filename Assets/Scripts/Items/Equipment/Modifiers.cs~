@@ -1,0 +1,29 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+/// <summary>
+/// Modifiers to the base stats, for an item.
+/// </summary>
+
+[System.Serializable]
+public class Modifiers
+{
+
+    public int strength;
+
+    public int stamina;
+
+    public int intelligence;
+
+    public int dexterity;
+
+    public int charisma;
+
+    public int luck;
+
+    public int attack;
+
+    public int defence;
+
+}

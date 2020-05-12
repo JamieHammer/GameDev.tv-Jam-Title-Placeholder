@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 /// <summary>
 /// Manages global UI.
@@ -38,7 +39,13 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI toolDescription;   // the text component of the description
 
-    [SerializeField] TextMeshProUGUI toolInfo;          // the text component of the effect information
+    [Space]
+
+    List<int> modifiers = new List<int>();              // a list of modifiers
+
+    List<GameObject> infoRows = new List<GameObject>(); // a list of effect info game objects
+
+    int modifierCount;                                  // the count of modifiers
 
     Item item;                                          // reference to the currently highlighted item
 
@@ -77,32 +84,41 @@ public class UIManager : MonoBehaviour
     {
         toolTitle.text = item.GetName();
         toolDescription.text = item.GetDescription();
-        toolInfo.text = toolTipInfo();
+
+        EffectInfo();
     }
 
-    string toolTipInfo()
+    void EffectInfo()
     {
-        StringBuilder info = new StringBuilder();
+        modifiers.Clear();
+        modifierCount = 0;
 
-        switch (item.GetInventoryType())
+        modifiers = item.GetModifiers();
+
+        int count = modifiers.Count;     // eight abilities and two status effects
+
+        for (int i = 0; i < count; i++)
         {
-            case InventoryType.None:
-                break;
+            if (modifiers[i] != 0)
+            {
+                ShowEffectInfo(i, modifiers[i]);
+            }
+        }
+    }
 
-            case InventoryType.Equipment:
-                Debug.Log((item as Equipment).GetAttackModifier());
-                break;
+    void ShowEffectInfo(int index, int value)
+    {
+        Debug.Log("the index " + index + " is " + value);
 
-            case InventoryType.Usable:
-
-                break;
-
-            case InventoryType.Quest:
-
+        switch (modifierCount)
+        {
+            default:
                 break;
         }
 
-        return "yo, info... and shit.";
+        modifierCount++;
+
+        Debug.Log(modifierCount);
     }
 
     #endregion

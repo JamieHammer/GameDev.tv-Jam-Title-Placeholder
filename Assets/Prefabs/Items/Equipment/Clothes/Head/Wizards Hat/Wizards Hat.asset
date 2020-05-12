@@ -19,13 +19,17 @@ MonoBehaviour:
     Anyone would think
 
     twice, before messing with a sorcerer.'
-  itemInfo: 'Attack: +3
-
-    Defence: +6'
   inventoryType: 1
   itemIcon: {fileID: 21300000, guid: b28311bcbf17b47458fddc96553ce9c8, type: 3}
   stackSize: 1
   slot: {fileID: 0}
   equipmentType: 4
-  armourModifier: 3
-  damageModifier: 6
+  modifiers:
+    strength: 1
+    stamina: 0
+    intelligence: 5
+    dexterity: 0
+    charisma: 0
+    luck: 0
+    attack: 3
+    defence: 6

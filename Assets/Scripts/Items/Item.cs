@@ -12,11 +12,8 @@ public abstract class Item : ScriptableObject, Moveable
 
     [SerializeField] string itemName;                   // the name of this inventory item
 
-    [TextArea(3, 3)]
+    [TextArea(4, 7)]
     [SerializeField] string itemDescription;            // the description of this item
-
-    [TextArea(3, 3)]
-    [SerializeField] string itemInfo;                   // info about the effect of the item
 
     [SerializeField] InventoryType inventoryType;       // the type of this inventory item
 
@@ -25,6 +22,32 @@ public abstract class Item : ScriptableObject, Moveable
     [SerializeField] int stackSize;                     // amount of items that can be stacked
 
     [SerializeField] InventorySlot slot;                // reference to this item's inventory slot
+
+    #region Modifiers
+
+    [Header("Modifiers")]
+
+    [SerializeField] Modifiers modifiers;               // stat modifiers of this piece of this item
+
+    public List<int> GetModifiers()
+    {
+        List<int> modifierList = new List<int>();
+
+        modifierList.Add(modifiers.strength);
+        modifierList.Add(modifiers.stamina);
+        modifierList.Add(modifiers.intelligence);
+        modifierList.Add(modifiers.dexterity);
+        modifierList.Add(modifiers.charisma);
+        modifierList.Add(modifiers.luck);
+        modifierList.Add(modifiers.attack);
+        modifierList.Add(modifiers.defence);
+        modifierList.Add(modifiers.health);
+        modifierList.Add(modifiers.experience);
+
+        return modifierList;
+    }
+
+    #endregion
 
     /// <summary>
     /// Returns the inventory type of this item.
@@ -51,15 +74,6 @@ public abstract class Item : ScriptableObject, Moveable
     public string GetDescription()
     {
         return itemDescription;
-    }
-
-    /// <summary>
-    /// Returns the effect info of this item.
-    /// </summary>
-
-    public string GetInfo()
-    {
-        return itemInfo;
     }
 
     /// <summary>

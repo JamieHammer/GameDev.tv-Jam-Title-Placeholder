@@ -19,13 +19,17 @@ MonoBehaviour:
     and not much
 
     else. That got oddly specific...'
-  itemInfo: 'Attack: +2
-
-    Defence +1'
   inventoryType: 1
   itemIcon: {fileID: 21300000, guid: 541ae020fad5efc48a89a38c6218a601, type: 3}
   stackSize: 1
   slot: {fileID: 0}
   equipmentType: 3
-  armourModifier: 1
-  damageModifier: 2
+  modifiers:
+    strength: 2
+    stamina: 4
+    intelligence: 0
+    dexterity: 1
+    charisma: 0
+    luck: 0
+    attack: 1
+    defence: 2
