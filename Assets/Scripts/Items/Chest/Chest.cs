@@ -15,13 +15,8 @@ public class Chest : MonoBehaviour, Interactable
 
     bool isOpen;                                // to check whether the chest is open or closed
 
-    List<Item> items;                           // a list of items contained in this chest
-    Bag bag;                                    // a reference to the bag component
-
     private void Start()
     {
-        bag = chestPanel.GetComponent<Bag>();
-
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
     }
@@ -38,7 +33,7 @@ public class Chest : MonoBehaviour, Interactable
         }
         else
         {
-            AddItems();
+            ChestManager.instance.AddItems();
 
             isOpen = true;
 
@@ -56,9 +51,7 @@ public class Chest : MonoBehaviour, Interactable
     {
         if (isOpen)
         {
-            StoreItems();
-
-            bag.Clear();
+            ChestManager.instance.StoreItems();
 
             isOpen = false;
 
@@ -66,29 +59,5 @@ public class Chest : MonoBehaviour, Interactable
 
             chestPanel.gameObject.SetActive(false);
         }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-
-    public void AddItems()
-    {
-        if (items != null)
-        {
-            foreach (var item in items)
-            {
-                item.Slot.AddItem(item);
-            }
-        }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-
-    public void StoreItems()
-    {
-        items = bag.GetItems();
     }
 }
