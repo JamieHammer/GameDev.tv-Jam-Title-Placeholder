@@ -61,6 +61,9 @@ TagManager:
   - name: Enemies
     uniqueID: 2169925223
     locked: 0
+  - name: NPC
+    uniqueID: 1797597681
+    locked: 0
   - name: Player
     uniqueID: 3236853209
     locked: 0
