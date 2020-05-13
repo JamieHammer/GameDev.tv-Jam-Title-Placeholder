@@ -20,6 +20,18 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler, IPointerEnterH
 
     ObservableStack<Item> items = new ObservableStack<Item>();  // a stack of items in this slot
 
+    /// <summary>
+    /// Returns the stack of items in this slot.
+    /// </summary>
+
+    public ObservableStack<Item> GetItems
+    {
+        get
+        {
+            return items;
+        }
+    }
+
     private void Awake()
     {
         items.OnPop += new UpdateStackEvent(UpdateSlot);

@@ -8,16 +8,19 @@ using UnityEngine;
 
 public class Chest : MonoBehaviour, Interactable
 {
-    public ChestPanel chestPanel;                      // reference to the chest panel
+    [SerializeField] ChestPanel chestPanel;     // reference to the chest panel
 
     SpriteRenderer spriteRenderer;              // reference to the sprite renderer component
     Animator animator;                          // reference to the animator component
 
     bool isOpen;                                // to check whether the chest is open or closed
 
+    List<Item> items;                           // a list of items contained in this chest
+    Bag bag;                                    // a reference to the bag component
+
     private void Start()
     {
-        //chestPanel = ChestPanel.instance;
+        bag = chestPanel.GetComponent<Bag>();
 
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
@@ -35,6 +38,8 @@ public class Chest : MonoBehaviour, Interactable
         }
         else
         {
+            AddItems();
+
             isOpen = true;
 
             animator.SetBool("Open", true);
@@ -49,10 +54,41 @@ public class Chest : MonoBehaviour, Interactable
 
     public void StopInteract()
     {
-        isOpen = false;
+        if (isOpen)
+        {
+            StoreItems();
 
-        animator.SetBool("Open", false);
+            bag.Clear();
 
-        chestPanel.gameObject.SetActive(false);
+            isOpen = false;
+
+            animator.SetBool("Open", false);
+
+            chestPanel.gameObject.SetActive(false);
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+
+    public void AddItems()
+    {
+        if (items != null)
+        {
+            foreach (var item in items)
+            {
+                item.Slot.AddItem(item);
+            }
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+
+    public void StoreItems()
+    {
+        items = bag.GetItems();
     }
 }

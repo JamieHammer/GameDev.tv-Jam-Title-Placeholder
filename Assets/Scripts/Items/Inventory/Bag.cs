@@ -6,7 +6,9 @@ public class Bag : MonoBehaviour
 {
     public List<InventorySlot> slots = new List<InventorySlot>();
 
-    public InventoryType type;
+    public InventoryType type;                  // reference to the type of this inventory bag
+
+    [SerializeField] Transform chestParent;     // reference to the chest slot parent
 
     private void Start()
     {
@@ -18,7 +20,11 @@ public class Bag : MonoBehaviour
         switch(type)
         {
             case InventoryType.None:
-
+                for (int i = 0; i < chestParent.childCount; i++)
+                {
+                    InventorySlot slot = chestParent.GetChild(i).GetComponent<InventorySlot>();
+                    slots.Add(slot);
+                }
                 break;
 
             case InventoryType.Equipment:
@@ -56,9 +62,37 @@ public class Bag : MonoBehaviour
         return false;
     }
 
-    public void RemoveItem(Item item)
+    /// <summary>
+    /// Returns the list of slots in this bag.
+    /// </summary>
+
+    public List<Item> GetItems()
     {
-        // todo remove from bag
-        Debug.Log("Should remove " + item);
+        List<Item> items = new List<Item>();
+
+        foreach (var slot in slots)
+        {
+            if (!slot.IsEmpty)
+            {
+                foreach (var item in slot.GetItems)
+                {
+                    items.Add(item);
+                }
+            }
+        }
+
+        return items;
+    }
+
+    /// <summary>
+    /// Clears the slots of this bag.
+    /// </summary>
+
+    public void Clear()
+    {
+        foreach (var slot in slots)
+        {
+            slot.Clear();
+        }
     }
 }

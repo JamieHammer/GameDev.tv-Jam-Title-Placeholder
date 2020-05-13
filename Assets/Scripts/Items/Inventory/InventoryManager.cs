@@ -279,32 +279,4 @@ public class InventoryManager : MonoBehaviour
 
         return false;
     }
-
-    /// <summary>
-    /// Responsible for removing items from the inventory system.
-    /// </summary>
-    /// <param name="item">item to remove from inventory</param>
-
-    public void Remove(Item item)
-    {
-        switch (item.GetInventoryType())
-        {
-            case InventoryType.Equipment:
-                equipmentBag.RemoveItem(item);
-                break;
-
-            case InventoryType.Usable:
-                usableItemsBag.RemoveItem(item);
-                break;
-
-            case InventoryType.Quest:
-                questItemsBag.RemoveItem(item);
-                break;
-        }
-
-        if (onItemChangedCallback != null)
-        {
-            onItemChangedCallback.Invoke();
-        }
-    }
 }
